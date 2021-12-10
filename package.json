@@ -1,0 +1,27 @@
+{
+  "name": "svg-macro-monorepo",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "test": "jest",
+    "lint": "eslint --ext .ts packages/*/src/**.ts",
+    "build-macro": "cd packages/svg-macro && pnpm build",
+    "build-explorer": "cd packages/svg-macro-explorer && pnpm build",
+    "build": "run-s build-macro build-explorer"
+  },
+  "author": "Luo Zhihao",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^27.0.3",
+    "@typescript-eslint/eslint-plugin": "^5.5.0",
+    "@typescript-eslint/parser": "^5.5.0",
+    "eslint": "^8.4.0",
+    "eslint-define-config": "^1.2.0",
+    "eslint-plugin-jest": "^25.3.0",
+    "jest": "^27.4.3",
+    "npm-run-all": "^4.1.5",
+    "ts-jest": "^27.1.0",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.2"
+  }
+}

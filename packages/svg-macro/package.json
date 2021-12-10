@@ -1,0 +1,26 @@
+{
+  "name": "svg-macro",
+  "version": "0.0.0",
+  "description": "a svg extension with useful macros",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build":"rm -rf dist && tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/beicause/svge.git"
+  },
+  "keywords": [
+    "svg",
+    "animation",
+    "effect"
+  ],
+  "author": "Luo Zhihao",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/beicause/svge/issues"
+  },
+  "homepage": "https://github.com/beicause/svge#readme"
+}
