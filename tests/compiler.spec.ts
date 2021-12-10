@@ -73,10 +73,10 @@ it("test compileRanom", () => {
         <svg> <rect width="@random(100,200)" height="@random(@random(),@random(10,20))" /> </svg>
     `)
     expect(res).toMatchInlineSnapshot(`
+"
+        <svg> <rect width=\\"121.132116\\" height=\\"11.612900\\" /> </svg>
     "
-            <svg> <rect width=\\"121.132116\\" height=\\"12.333162\\" /> </svg>
-        "
-  `)
+`)
 })
 
 it('test compileIndex', () => {
