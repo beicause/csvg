@@ -1,9 +1,4 @@
-import {
-    compileRepeat,
-    compileRandom,
-    Params,
-    resolveParams,
-} from "../packages/svg-macro/src/compiler"
+import { getRandomCompiler, getRepeatCompiler, Params, resolveParams, getIndexCompiler } from "../packages/svg-macro/src/compiler"
 
 it("test resolveParams", () => {
     const options = { name: "fun", sign: "#" }
@@ -27,16 +22,16 @@ it("test resolveParams", () => {
     } as Params)
 })
 it("test compileIteration", () => {
-    const res = compileRepeat()(`
+    const res = getRepeatCompiler()(`
     <svg>
-        #repeat(
+        @repeat(
             <path/>
-            #repeat(
+            @repeat(
             <path/>
             ,2)
         ,3)
 
-        #repeat(
+        @repeat(
             <path/>
         )
     </svg>`)
@@ -74,12 +69,23 @@ it("test compileIteration", () => {
 })
 
 it("test compileRanom", () => {
-    const res = compileRandom()(`
-        <svg> <rect width="#random(100,200)" height="#random(#random(),#random(10,20))" /> </svg>
+    const res = getRandomCompiler()(`
+        <svg> <rect width="@random(100,200)" height="@random(@random(),@random(10,20))" /> </svg>
     `)
     expect(res).toMatchInlineSnapshot(`
     "
             <svg> <rect width=\\"121.132116\\" height=\\"12.333162\\" /> </svg>
         "
   `)
+})
+
+it('test compileIndex', () => {
+    const res = getIndexCompiler({ name: 'i' })(getRepeatCompiler({ name: 're' })(`
+    <svg>@i() @i(2) @i() @i(0,0) @i(3) @re(@i() ,5)</svg>
+    `))
+    expect(res).toMatchInlineSnapshot(`
+"
+    <svg>0 2 3 0 3 4 5 6 7 8 </svg>
+    "
+`)
 })

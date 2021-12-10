@@ -9,7 +9,7 @@ const App = {
       h(
         'a',
         {
-          href: 'https://github.com/beicause/svga',
+          href: 'https://github.com/beicause/svg-macro',
           target: '_blank',
         },
         'GitHub',

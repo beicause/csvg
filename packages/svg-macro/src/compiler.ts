@@ -10,15 +10,21 @@ export interface Options {
 export interface RandomOptions extends Options {
     seed?: number, fractionDigits?: number
 }
-export type CompileWare<T extends Options = Options> = (options?: T) => Middleware
-export type Middleware = (input: string) => string
+export interface IndexOptions extends Options {
+    start?: number
+}
+export type Middleware<T extends Options = Options> = { (input: string): string, options: T }
 
 const baseOptions = {
-    sign: '#'
+    sign: '@'
 }
-const randomOptions = { ...baseOptions, name: 'random', seed: 0, fractionDigits: 6 }
+const randomOptions: RandomOptions = { ...baseOptions, name: 'random', seed: 0, fractionDigits: 6 }
 const repeatOptions = { ...baseOptions, name: 'repeat' }
+const indexOptions: IndexOptions = { ...baseOptions, name: 'index', start: -1 }
 
+export function replaceMacro(input: string, replace: string, params: Params, name: string): string {
+    return input.substring(0, params.open - name.length - 1) + replace + input.substring(params.close + 1)
+}
 export function resolveParams(input: string, options: Required<Options>): Params | undefined {
     const _name = options.sign + options.name
     const open = input.indexOf(_name) + _name.length
@@ -49,40 +55,65 @@ export function resolveParams(input: string, options: Required<Options>): Params
     return { content, open, close, params }
 }
 
-export const compileRandom: CompileWare<RandomOptions> = options => input => {
-    const _options = { ...randomOptions, ...options } as Required<RandomOptions>
-    const params = resolveParams(input, _options)
-    if (!params) return input
-    const p1 = params.params[0] || ''
-    const p2 = params.params[1]
+export function getRandomCompiler(options?: RandomOptions): Middleware<RandomOptions> {
+    const compileRandom: Middleware<RandomOptions> = (input) => {
+        const _options = compileRandom.options as Required<RandomOptions>
+        const params = resolveParams(input, _options)
+        if (!params) return input
+        const p1 = params.params[0] || ''
+        const p2 = params.params[1]
 
-    let num1 = Number(compileRandom(_options)(p1))
-    if (isNaN(num1)) throw new Error(`Invalid number "${p1}" in #random. input: ${input}`)
+        let num1 = Number(compileRandom(p1))
+        if (isNaN(num1)) throw new Error(`Invalid number "${p1}" in #random. input: ${input}`)
 
-    let num2: number
-    if (p2) {
-        num2 = Number(compileRandom(_options)(p2))
-        if (isNaN(num1)) throw new Error(`Invalid number "${p2}" in #random. input: ${input}`)
+        let num2: number
+        if (p2) {
+            num2 = Number(compileRandom(p2))
+            if (isNaN(num1)) throw new Error(`Invalid number "${p2}" in #random. input: ${input}`)
+        }
+        else {
+            num2 = num1
+            num1 = 0
+        }
+        const res = replaceMacro(input, seedRandom(_options, num1, num2).toFixed(_options.fractionDigits), params, _options.name)
+        return compileRandom(res)
     }
-    else {
-        num2 = num1
-        num1 = 0
-    }
-    const res = input.substring(0, params.open - _options.name.length - 1) + seedRandom(_options, num1, num2).toFixed(_options.fractionDigits) + input.substring(params.close + 1)
-    return compileRandom(_options)(res)
+    compileRandom.options = { ...randomOptions, ...options }
+    return compileRandom
 }
 
-export const compileRepeat: CompileWare = options => input => {
-    const _options = { ...repeatOptions, ...options } as Required<Options>
-    const name = _options.name
-    const params = resolveParams(input, _options)
+export function getRepeatCompiler(options?: Options) {
+    const compileRepeat: Middleware = (input) => {
+        const _options = compileRepeat.options as Required<Options>
+        const name = _options.name
+        const params = resolveParams(input, _options)
 
-    if (!params) return input
-    const p1 = params.params[0] || ''
-    let p2 = parseInt(params.params[params.params.length - 1])
-    if (!p2 || p2 < 1) p2 = 1
-    let repeatText = ''
-    for (let i = 0; i < p2; i++) repeatText += p1
-    const res = input.substring(0, params.open - name.length - 1) + repeatText + input.substring(params.close + 1)
-    return compileRepeat(_options)(res)
+        if (!params) return input
+        const p1 = params.params[0] || ''
+        let p2 = parseInt(params.params[params.params.length - 1])
+        if (!p2 || p2 < 1) p2 = 1
+        let repeatText = ''
+        for (let i = 0; i < p2; i++) repeatText += p1
+        const res = replaceMacro(input, repeatText, params, name)
+        return compileRepeat(res)
+
+    }
+    compileRepeat.options = { ...repeatOptions, ...options }
+    return compileRepeat
+}
+
+export function getIndexCompiler(options?: IndexOptions) {
+    const compileIndex: Middleware = (input) => {
+        const _options = compileIndex.options as Required<IndexOptions>
+        const name = _options.name
+        const params = resolveParams(input, _options)
+        if (!params) return input
+        const step = parseInt(params.params[0] || '1')
+        if (params.params[1]) _options.start = parseInt(params.params[1])
+        _options.start += step
+        const res = replaceMacro(input, '' + _options.start, params, name)
+        return compileIndex(res)
+    }
+    compileIndex.options = { ...indexOptions, ...options }
+    return compileIndex
 }

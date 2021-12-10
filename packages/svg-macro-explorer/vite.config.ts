@@ -4,5 +4,6 @@ export default defineConfig({
     build: {
         // for webview
         cssTarget: 'chrome61'
-    }
+    },
+    base:'./'
 })

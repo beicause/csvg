@@ -1,18 +1,30 @@
 export * from './compiler'
 export * from './utils'
-import { Middleware } from '.'
+import { Middleware, getRandomCompiler, getIndexCompiler, getRepeatCompiler } from './compiler'
 
 
 export class Compiler {
     private _input = ''
     private _output = ''
-    middleware = [] as ((input: string) => string)[]
     get input() { return this._input }
     get output() { return this._output }
+    middleware = new Map<string, Middleware>()
 
-    use(...middleware: Middleware[]) {
-        this.middleware = [...this.middleware, ...middleware]
-        return this
+    constructor() {
+        this.use('repeat', getRepeatCompiler())
+        this.use('re', getRepeatCompiler({ name: 're' }))
+        this.use('random', getRandomCompiler())
+        this.use('ra', getRandomCompiler({ name: 'ra' }))
+        this.use('index', getIndexCompiler())
+        this.use('i', getIndexCompiler({ name: 'i' }))
+    }
+
+    use(name: string, compiler: Middleware) {
+        this.middleware.set(name, compiler)
+    }
+
+    remove(name: string) {
+        this.middleware.delete(name)
     }
     compile(input: string) {
         this._input = input

@@ -1,7 +1,7 @@
 import * as m from 'monaco-editor'
 import { initOptions } from './options'
 import { watchEffect } from 'vue'
-import { Compiler, compileRandom, compileRepeat } from 'svg-macro'
+import { Compiler } from 'svg-macro'
 import './index.css'
 
 declare global {
@@ -19,9 +19,9 @@ const init = () => {
     const persistedState: PersistedState = JSON.parse(localStorage.getItem('state') || '{}')
 
     const editor = monaco.editor.create(document.getElementById('source')!, {
-        value: decodeURIComponent(window.location.hash.slice(1)) || persistedState.src ||
+        value: persistedState.src ||
             `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            |    #repeat(<circle cx="#random(2,98)" cy="#random(2,98)" r="1"/>
+            |    @re(<circle cx="@ra(2,98)" cy="@ra(2,98)" r="1"/>
             |    ,100)
             |</svg>`.replace(/\n\s*?\|/g, '\n'),
         language: 'xml',
@@ -35,16 +35,14 @@ const init = () => {
         tabSize: 2
     })
     const svg = document.getElementById('svg')!
+
     const reCompile = () => {
         const src = editor.getValue()
         const state = JSON.stringify({
             src
         })
         localStorage.setItem('state', state)
-        window.location.hash = encodeURIComponent(src)
-        const res = new Compiler()
-            .use(compileRepeat(), compileRandom())
-            .compile(src)
+        const res = new Compiler().compile(src)
         output.setValue(res)
         svg.innerHTML = res
     }
