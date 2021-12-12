@@ -155,7 +155,7 @@ function getAvailableElements(monaco: typeof m, lastOpenedTag: { tagName: SvgSch
         const elementInfo = SvgSchema[element as SvgSchemaKey]
         availableItems.push({
             label: element,
-            insertText: `${element}>$\{1}</${element}`,
+            insertText: `${element}>$\{1}</${element}>`,
             kind: monaco.languages.CompletionItemKind.Class,
             detail: elementInfo.detail,
             insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,

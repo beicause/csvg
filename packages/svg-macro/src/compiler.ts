@@ -87,9 +87,9 @@ export function getRepeatCompiler(options?: Options) {
         const _options = compileRepeat.options as Required<Options>
         const name = _options.name
         const params = resolveParams(input, _options)
-
+        
         if (!params) return input
-        const p1 = params.params[0] || ''
+        const p1 = params.params.slice(0,-1).join(',')
         let p2 = parseInt(params.params[params.params.length - 1])
         if (!p2 || p2 < 1) p2 = 1
         let repeatText = ''
