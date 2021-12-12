@@ -1,6 +1,4 @@
-import {
-  h, createApp,
-} from 'vue'
+import { h, createApp } from 'vue'
 
 const App = {
   setup() {
@@ -10,9 +8,9 @@ const App = {
         'a',
         {
           href: 'https://github.com/beicause/csvg',
-          target: '_blank',
+          target: '_blank'
         },
-        'GitHub',
+        'GitHub'
       ),
 
       h('div', { id: 'options-wrapper' }, [

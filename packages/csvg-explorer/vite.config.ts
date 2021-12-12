@@ -1,9 +1,9 @@
-import { defineConfig } from "vite"
+import { defineConfig } from 'vite'
 
 export default defineConfig({
-    build: {
-        // for webview
-        cssTarget: 'chrome61'
-    },
-    base:'./'
+  build: {
+    // for webview
+    cssTarget: 'chrome61'
+  },
+  base: './'
 })

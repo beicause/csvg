@@ -1,5 +1,21 @@
 {
     "compilerOptions": {
-        "esModuleInterop": true
-    }
+        "target": "es2019",
+        "module": "ESNext",
+        "declaration": true,
+        "strict": true,
+        "esModuleInterop": true,
+        "strictNullChecks": true,
+        "moduleResolution": "node",
+        "outDir": "dist",
+        "declarationDir": ".",
+        "baseUrl": ".",
+        "rootDir": "."
+    },
+    "include": [
+        "packages/**/*.ts"
+    ],
+    "exclude": [
+        "*.js"
+    ]
 }

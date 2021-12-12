@@ -1,4 +1,4 @@
-import { getRandomCompiler, getRepeatCompiler, Params, resolveParams, getIndexCompiler, getSetCompiler, getGetCompiler } from "../packages/csvg/src/compiler"
+import { getRandomCompiler, getRepeatCompiler, Params, resolveParams, getIndexCompiler, getSetCompiler, getGetCompiler, getCalcCompiler } from "../packages/csvg/src/compiler"
 
 it("test resolveParams", () => {
     const options = { name: "fun", sign: "#" }
@@ -49,11 +49,11 @@ it("test random compiler", () => {
 
 it('test index compiler', () => {
     const res = getIndexCompiler({ name: 'i' })(getRepeatCompiler({ name: 're' })(`
-    <svg>@i() @i(2) @i() @i(0,0) @i(3) @re(@i() ,5)</svg>
+    <svg>@i(2), @i(), @i(0,0), @i(0,1), @re(@i(), @i(1,1), ,5)</svg>
     `))
     expect(res).toMatchInlineSnapshot(`
 "
-    <svg>0 2 3 0 3 4 5 6 7 8 </svg>
+    <svg>1, 2, 2, -1, 3, 0, 4, 1, 5, 2, 6, 3, 7, 4, </svg>
     "
 `)
 })
@@ -69,4 +69,9 @@ it('test get&set compiler',()=>{
     <svg>123 456 789 789 123</svg>
     "
 `)
+})
+
+it('test calc compiler',()=>{
+    const res=getCalcCompiler()(`@calc((10+2)/10*1.2+0.56+6%8)`)
+    expect(res).toBe('8')
 })

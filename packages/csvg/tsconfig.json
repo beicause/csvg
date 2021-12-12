@@ -1,13 +1,14 @@
 {
     "compilerOptions": {
-        "target": "ESNext",
+        "target": "es2019",
         "module": "ESNext",
         "declaration": true,
         "strict": true,
         "esModuleInterop": true,
         "strictNullChecks": true,
         "moduleResolution": "node",
-        "outDir": "dist"
+        "outDir": "dist",
+        "declarationDir": ".",
     },
     "include": [
         "src/*.ts"
