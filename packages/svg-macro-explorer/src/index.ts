@@ -3,6 +3,7 @@ import { initOptions } from './options'
 import { watchEffect } from 'vue'
 import { Compiler } from 'svg-macro'
 import './index.css'
+import { getXmlCompletionProvider, getXmlHoverProvider } from './completion-provider'
 
 declare global {
     interface Window {
@@ -16,6 +17,9 @@ interface PersistedState {
 const init = () => {
     const monaco = window.monaco
     monaco.editor.setTheme('vs-dark')
+    // register a completion item provider for xml language
+    monaco.languages.registerCompletionItemProvider('html', getXmlCompletionProvider(monaco))
+    monaco.languages.registerHoverProvider('html', getXmlHoverProvider(monaco))
     const persistedState: PersistedState = JSON.parse(localStorage.getItem('state') || '{}')
 
     const editor = monaco.editor.create(document.getElementById('source')!, {
@@ -24,13 +28,13 @@ const init = () => {
             |    @re(<circle cx="@ra(2,98)" cy="@ra(2,98)" r="1"/>
             |    ,100)
             |</svg>`.replace(/\n\s*?\|/g, '\n'),
-        language: 'xml',
+        language: 'html',
         tabSize: 2
     })
 
     const output = monaco.editor.create(document.getElementById('code')!, {
         value: '',
-        language: 'xml',
+        language: 'html',
         readOnly: true,
         tabSize: 2
     })
