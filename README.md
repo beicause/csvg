@@ -22,3 +22,7 @@ alias:@re
 
 will be replaced with the increasing index by step.Only supports integer.    
 alias:@i
+
+### @set(template) & @get(index)
+
+the former will be replaced with the template which will be saved in an array, the latter will be replaced with the array[index], supporting negative index, -1 by default.

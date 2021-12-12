@@ -8,20 +8,20 @@ export interface Options {
     sign?: string, name?: string
 }
 export interface RandomOptions extends Options {
-    seed?: number, fractionDigits?: number
+    seed?: { value: number }, fractionDigits?: number
 }
-export interface IndexOptions extends Options {
-    start?: number
-}
-export type Middleware<T extends Options = Options> = { (input: string): string, options: T }
+export type Middleware<T extends Options = Options> = { (input: string): string, options: Required<T> }
 
 const baseOptions = {
     sign: '@'
 }
-const randomOptions: RandomOptions = { ...baseOptions, name: 'random', seed: 0, fractionDigits: 6 }
+const seed = { value: 0 }
+const storage = [] as string[]
+const randomOptions = { ...baseOptions, name: 'random', seed, fractionDigits: 6 }
 const repeatOptions = { ...baseOptions, name: 'repeat' }
-const indexOptions: IndexOptions = { ...baseOptions, name: 'index', start: -1 }
-
+const indexOptions = { ...baseOptions, name: 'index', start: -1 }
+const setOptions = { ...baseOptions, name: 'set', storage }
+const getOptions = { ...baseOptions, name: 'get', storage }
 export function replaceMacro(input: string, replace: string, params: Params, name: string): string {
     return input.substring(0, params.open - name.length - 1) + replace + input.substring(params.close + 1)
 }
@@ -56,8 +56,8 @@ export function resolveParams(input: string, options: Required<Options>): Params
 }
 
 export function getRandomCompiler(options?: RandomOptions): Middleware<RandomOptions> {
-    const compileRandom: Middleware<RandomOptions> = (input) => {
-        const _options = compileRandom.options as Required<RandomOptions>
+    const compileRandom: Middleware<RandomOptions> = input => {
+        const _options = compileRandom.options
         const params = resolveParams(input, _options)
         if (!params) return input
         const p1 = params.params[0] || ''
@@ -75,7 +75,7 @@ export function getRandomCompiler(options?: RandomOptions): Middleware<RandomOpt
             num2 = num1
             num1 = 0
         }
-        const res = replaceMacro(input, seedRandom(_options, num1, num2).toFixed(_options.fractionDigits), params, _options.name)
+        const res = replaceMacro(input, seedRandom(_options.seed, num1, num2).toFixed(_options.fractionDigits), params, _options.name)
         return compileRandom(res)
     }
     compileRandom.options = { ...randomOptions, ...options }
@@ -83,15 +83,15 @@ export function getRandomCompiler(options?: RandomOptions): Middleware<RandomOpt
 }
 
 export function getRepeatCompiler(options?: Options) {
-    const compileRepeat: Middleware = (input) => {
-        const _options = compileRepeat.options as Required<Options>
+    const compileRepeat: Middleware = input => {
+        const _options = compileRepeat.options
         const name = _options.name
         const params = resolveParams(input, _options)
-        
+
         if (!params) return input
-        const p1 = params.params.slice(0,-1).join(',')
+        const p1 = params.params.slice(0, -1).join(',')
         let p2 = parseInt(params.params[params.params.length - 1])
-        if (!p2 || p2 < 1) p2 = 1
+        if (!p2 || p2 < 0) p2 = 0
         let repeatText = ''
         for (let i = 0; i < p2; i++) repeatText += p1
         const res = replaceMacro(input, repeatText, params, name)
@@ -102,9 +102,9 @@ export function getRepeatCompiler(options?: Options) {
     return compileRepeat
 }
 
-export function getIndexCompiler(options?: IndexOptions) {
-    const compileIndex: Middleware = (input) => {
-        const _options = compileIndex.options as Required<IndexOptions>
+export function getIndexCompiler(options?: Options & { start?: number }) {
+    const compileIndex: Middleware<NonNullable<typeof options>> = input => {
+        const _options = compileIndex.options
         const name = _options.name
         const params = resolveParams(input, _options)
         if (!params) return input
@@ -116,4 +116,32 @@ export function getIndexCompiler(options?: IndexOptions) {
     }
     compileIndex.options = { ...indexOptions, ...options }
     return compileIndex
+}
+
+export function getSetCompiler(options?: Options & { storage?: string[] }) {
+    const compileSet: Middleware<NonNullable<typeof options>> = input => {
+        const _options = compileSet.options
+        const params = resolveParams(input, _options)
+        if (!params) return input
+        _options.storage.push(params.content)
+        const res = replaceMacro(input, params.content, params, _options.name)
+        return compileSet(res)
+    }
+    compileSet.options = { ...setOptions, ...options }
+    return compileSet
+}
+
+export function getGetCompiler(options?: Options & { storage?: string[] }) {
+    const compileGet: Middleware<NonNullable<typeof options>> = input => {
+        const _options = compileGet.options
+        const params = resolveParams(input, _options)
+        if (!params) return input
+        let index = parseInt(compileGet(params.params[0] || ''))
+        if (isNaN(index)) index = -1
+        if (index < 0) index += _options.storage.length
+        const res = replaceMacro(input, _options.storage[index], params, _options.name)
+        return compileGet(res)
+    }
+    compileGet.options = { ...getOptions, ...options }
+    return compileGet
 }
