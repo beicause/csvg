@@ -1,4 +1,4 @@
-import { getRandomCompiler, getRepeatCompiler, Params, resolveParams, getIndexCompiler, getSetCompiler, getGetCompiler } from "../packages/svg-macro/src/compiler"
+import { getRandomCompiler, getRepeatCompiler, Params, resolveParams, getIndexCompiler, getSetCompiler, getGetCompiler } from "../packages/csvg/src/compiler"
 
 it("test resolveParams", () => {
     const options = { name: "fun", sign: "#" }

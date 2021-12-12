@@ -5,11 +5,11 @@ import {
 const App = {
   setup() {
     return () => [
-      h('h1', 'Svg Macro Explorer'),
+      h('h1', 'Csvg Explorer'),
       h(
         'a',
         {
-          href: 'https://github.com/beicause/svg-macro',
+          href: 'https://github.com/beicause/csvg',
           target: '_blank',
         },
         'GitHub',

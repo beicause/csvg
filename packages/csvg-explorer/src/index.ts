@@ -1,7 +1,7 @@
 import * as m from 'monaco-editor'
 import { initOptions } from './options'
 import { watchEffect } from 'vue'
-import { Compiler } from 'svg-macro'
+import { Compiler } from 'csvg'
 import './index.css'
 import { getXmlCompletionProvider, getXmlHoverProvider } from './completion-provider'
 
