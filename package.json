@@ -5,8 +5,8 @@
   "scripts": {
     "test": "jest",
     "lint": "eslint --ext .ts packages/*/src/**.ts",
-    "build-macro": "cd packages/svg-macro && pnpm build",
-    "build-explorer": "cd packages/svg-macro-explorer && pnpm build",
+    "build-macro": "cd packages/csvg && pnpm build",
+    "build-explorer": "cd packages/csvg-explorer && pnpm build",
     "build": "run-s build-macro build-explorer"
   },
   "author": "Luo Zhihao",

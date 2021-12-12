@@ -22,7 +22,6 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: v16
-          registry-url: https://registry.npmjs.org/
           cache: "pnpm"
 
       - run: npx conventional-github-releaser -p angular
@@ -37,6 +36,6 @@ jobs:
         run: pnpm run build
 
       - name: Publish to NPM
-        run: pnpm -r publish --access public --no-git-checks
+        run: pnpm -r publish --access public --no-git-checks --registry https://registry.npmjs.org/
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

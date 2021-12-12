@@ -28,18 +28,18 @@ importers:
       ts-node: 10.4.0_typescript@4.5.2
       typescript: 4.5.2
 
-  packages/svg-macro:
+  packages/csvg:
     specifiers: {}
 
-  packages/svg-macro-explorer:
+  packages/csvg-explorer:
     specifiers:
+      csvg: workspace:*
       monaco-editor: ^0.30.1
-      svg-macro: workspace:*
       vite: ^2.7.1
       vue: ^3.2.24
     dependencies:
+      csvg: link:../csvg
       monaco-editor: 0.30.1
-      svg-macro: link:../svg-macro
       vue: 3.2.24
     devDependencies:
       vite: 2.7.1
@@ -1365,7 +1365,7 @@ packages:
     dev: true
 
   /csstype/2.6.19:
-    resolution: {integrity: sha512-ZVxXaNy28/k3kJg0Fou5MiYpp88j7H9hLZp8PDC3jV0WFjfH5E9xHb56L0W59cPbKbcHXeP4qyT8PrHp8t6LcQ==, tarball: csstype/download/csstype-2.6.19.tgz?cache=0&sync_timestamp=1637224867418&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fcsstype%2Fdownload%2Fcsstype-2.6.19.tgz}
+    resolution: {integrity: sha512-ZVxXaNy28/k3kJg0Fou5MiYpp88j7H9hLZp8PDC3jV0WFjfH5E9xHb56L0W59cPbKbcHXeP4qyT8PrHp8t6LcQ==, tarball: csstype/download/csstype-2.6.19.tgz}
     dev: false
 
   /data-urls/2.0.0:
