@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/beicause/svge.git"
+    "url": "git+https://github.com/beicause/csvg.git"
   },
   "keywords": [
     "svg",
@@ -21,7 +21,7 @@
   "author": "Luo Zhihao",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/beicause/svge/issues"
+    "url": "https://github.com/beicause/csvg/issues"
   },
-  "homepage": "https://github.com/beicause/svge#readme"
+  "homepage": "https://github.com/beicause/csvg#readme"
 }
