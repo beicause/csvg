@@ -1,6 +1,6 @@
 {
   "name": "csvg",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "a svg extension with useful macros",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
