@@ -10,12 +10,12 @@ interface Pair {
     start: RegExpMatchArray, end: RegExpMatchArray, child?: Pair
 }
 
-export function parse(input: string, sign: string) {
+export function parse(input: string, prefix: string) {
     const functions = [] as FunctionExpression[]
     // resolve paired parentheses
     const pairs = [] as Pair[]
     const stack = [] as RegExpMatchArray[]
-    const words = input.matchAll(new RegExp(sign + '\\w*?\\(|\\)', 'g'))
+    const words = input.matchAll(new RegExp(prefix + '\\w*?\\(|\\)', 'g'))
     let hasChild = false
     for (const word of words) {
         if (word[0] !== ')') stack.push(word)

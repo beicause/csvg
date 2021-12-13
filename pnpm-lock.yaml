@@ -7,6 +7,7 @@ importers:
       '@rollup/plugin-node-resolve': ^13.0.6
       '@rollup/plugin-typescript': ^8.3.0
       '@types/jest': ^27.0.3
+      '@types/node': ^16.11.12
       '@typescript-eslint/eslint-plugin': ^5.5.0
       '@typescript-eslint/parser': ^5.5.0
       eslint: ^8.4.0
@@ -26,6 +27,7 @@ importers:
       '@rollup/plugin-node-resolve': 13.0.6_rollup@2.61.1
       '@rollup/plugin-typescript': 8.3.0_477267584ddb2253e74d0b949bc9446a
       '@types/jest': 27.0.3
+      '@types/node': 16.11.12
       '@typescript-eslint/eslint-plugin': 5.6.0_16d83f5c41c3abb1061a82b07c18e4f3
       '@typescript-eslint/parser': 5.6.0_eslint@8.4.1+typescript@4.5.2
       eslint: 8.4.1
@@ -38,12 +40,15 @@ importers:
       rimraf: 3.0.2
       rollup: 2.61.1
       ts-jest: 27.1.1_d967a5c71b36617f9eaef12c091f7695
-      ts-node: 10.4.0_typescript@4.5.2
+      ts-node: 10.4.0_d1ba71cee4528a43e185cc3d6fa907dc
       tslib: 2.3.1
       typescript: 4.5.2
 
   packages/csvg:
-    specifiers: {}
+    specifiers:
+      magic-string: ^0.25.7
+    devDependencies:
+      magic-string: 0.25.7
 
   packages/csvg-explorer:
     specifiers:
@@ -2663,7 +2668,7 @@ packages:
       micromatch: 4.0.4
       pretty-format: 27.4.2
       slash: 3.0.0
-      ts-node: 10.4.0_typescript@4.5.2
+      ts-node: 10.4.0_d1ba71cee4528a43e185cc3d6fa907dc
     transitivePeerDependencies:
       - bufferutil
       - canvas
@@ -3248,7 +3253,6 @@ packages:
     resolution: {integrity: sha1-P0l9b9NMZpxnmNy4IfLvMfVEUFE=, tarball: magic-string/download/magic-string-0.25.7.tgz}
     dependencies:
       sourcemap-codec: 1.4.8
-    dev: false
 
   /make-dir/3.1.0:
     resolution: {integrity: sha1-QV6WcEazp/HRhSd9hKpYIDcmoT8=, tarball: make-dir/download/make-dir-3.1.0.tgz}
@@ -3853,7 +3857,6 @@ packages:
 
   /sourcemap-codec/1.4.8:
     resolution: {integrity: sha1-6oBL2UhXQC5pktBaOO8a41qatMQ=, tarball: sourcemap-codec/download/sourcemap-codec-1.4.8.tgz}
-    dev: false
 
   /spdx-correct/3.1.1:
     resolution: {integrity: sha1-3s6BrJweZxPl99G28X1Gj6U9iak=, tarball: spdx-correct/download/spdx-correct-3.1.1.tgz}
@@ -4109,7 +4112,7 @@ packages:
       yargs-parser: 20.2.9
     dev: true
 
-  /ts-node/10.4.0_typescript@4.5.2:
+  /ts-node/10.4.0_d1ba71cee4528a43e185cc3d6fa907dc:
     resolution: {integrity: sha1-aA+IlFiF9ObPRQ5/DWIj3UBIlfc=, tarball: ts-node/download/ts-node-10.4.0.tgz?cache=0&sync_timestamp=1636428823694&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fts-node%2Fdownload%2Fts-node-10.4.0.tgz}
     hasBin: true
     peerDependencies:
@@ -4128,6 +4131,7 @@ packages:
       '@tsconfig/node12': 1.0.9
       '@tsconfig/node14': 1.0.1
       '@tsconfig/node16': 1.0.2
+      '@types/node': 16.11.12
       acorn: 8.6.0
       acorn-walk: 8.2.0
       arg: 4.1.3

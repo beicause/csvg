@@ -1,104 +1,58 @@
 import {
-  getRandomCompiler,
-  getRepeatCompiler,
-  Params,
-  resolveParams,
-  getIndexCompiler,
-  getSetCompiler,
-  getGetCompiler,
-  getCalcCompiler
-} from '../packages/csvg/src/compiler'
+    processCalc,
+    processGet,
+    processIndex,
+    processRandom,
+    processRepeat,
+    processSet
+} from '../packages/csvg/src/processor'
 import { parse } from '../packages/csvg/src/parser'
-it('test resolveParams', () => {
-  const options = { name: 'fun', sign: '#' }
-  expect(resolveParams('#fun()', options)).toEqual({
-    params: [],
-    content: '',
-    open: 4,
-    close: 5
-  } as Params)
-  expect(resolveParams('#fun(3)', options)).toEqual({
-    params: ['3'],
-    content: '3',
-    open: 4,
-    close: 6
-  } as Params)
-  expect(resolveParams('#fun(#fn(),1)', options)).toEqual({
-    params: ['#fn()', '1'],
-    content: '#fn(),1',
-    open: 4,
-    close: 12
-  } as Params)
-})
-it('test repeat compiler', () => {
-  const res = getRepeatCompiler()(`
-    <svg>
-        @repeat(<path/>@repeat(<path/>,2),3)
-        @repeat(<path/>)
-    </svg>`)
-  expect(res).toMatchInlineSnapshot(`
-    "
-        <svg>
-            <path/><path/><path/><path/><path/><path/><path/><path/><path/>
-            
-        </svg>"
-  `)
+
+it('test repeat processor', () => {
+    const res = processRepeat([`<svg><path/></svg>`, '2'])
+    expect(res).toMatchInlineSnapshot(`"<svg><path/></svg><svg><path/></svg>"`)
 })
 
-it('test random compiler', () => {
-  const res = getRandomCompiler({ name: 'ra' })(
-    getRandomCompiler()(`
-        <svg> <rect width="@random(100,200)" height="@ra(@random(),@ra(10,20))" /> </svg>
-    `)
-  )
-  expect(res).toMatchInlineSnapshot(`
-    "
-            <svg> <rect width=\\"121.132116\\" height=\\"11.612900\\" /> </svg>
-        "
-  `)
+it('test random processor', () => {
+    const res = processRandom(['10', '20']) + '/' + processRandom(['5', '10'])
+    expect(res).toMatchInlineSnapshot(`"12.113212/8.547111"`)
 })
 
-it('test index compiler', () => {
-  const res = getIndexCompiler({ name: 'i' })(
-    getRepeatCompiler({ name: 're' })(`
-    <svg>@i(2), @i(), @i(0,0), @i(0,1), @re(@i(), @i(1,1), ,5)</svg>
-    `)
-  )
-  expect(res).toMatchInlineSnapshot(`
-    "
-        <svg>1, 2, 2, -1, 3, 0, 4, 1, 5, 2, 6, 3, 7, 4, </svg>
-        "
-  `)
+it('test index processor', () => {
+    const res =
+        processIndex(['3']) +
+        '/' +
+        processIndex(['102', '1']) +
+        '/' +
+        processIndex(['-1']) +
+        '/' +
+        processIndex(['0', '0', '0']) +
+        '/' +
+        processIndex(['0', '1', '100'])
+    expect(res).toMatchInlineSnapshot(`"2/101/1/0/100"`)
 })
 
-it('test get&set compiler', () => {
-  const compiler = getGetCompiler()
-  const res = compiler(
-    getSetCompiler()(`
-    <svg>@set(123) @set(456) @set(789) @get() @get(0)</svg>
-    `)
-  )
-  expect(compiler.options.storage).toEqual(['123', '456', '789'])
-  expect(res).toMatchInlineSnapshot(`
-    "
-        <svg>123 456 789 789 123</svg>
-        "
-  `)
+it('test get&set processor', () => {
+    const set = processSet(['a10a']) + '/' + processSet(['b5b'])
+    const res = processGet(['']) + '/' + processGet(['0'])
+    expect(processGet.options.storage).toEqual(['a10a', 'b5b'])
+    expect(res).toEqual(`"b5b/a10a"`)
+    expect(set).toEqual('\\"a10a/b5b\\"')
 })
 
-it('test calc compiler', () => {
-  const res = getCalcCompiler()(`@calc((10+2)/10*1.2+0.56+6%8)`)
-  expect(res).toBe('8')
+it('test calc processor', () => {
+    const res = processCalc([`((10+2)/10*1.2+0.56+6%8)`])
+    expect(res).toBe('8')
 })
 
 it('test parser', () => {
-  const res = parse(
-    `
+    const res = parse(
+        `
     @a(1,a,@b(),d) @c(0)
     `,
-    '@'
-  )
-  expect(JSON.stringify(res)).toMatchInlineSnapshot(
-    `"[{\\"name\\":\\"@a\\",\\"range\\":[5,18],\\"content\\":\\"@a(1,a,@b(),d)\\",\\"params\\":[\\"1\\",\\"a\\",{\\"name\\":\\"@b\\",\\"range\\":[12,15],\\"content\\":\\"@b()\\",\\"params\\":[]},\\"d\\"]},{\\"name\\":\\"@c\\",\\"range\\":[20,24],\\"content\\":\\"@c(0)\\",\\"params\\":[\\"0\\"]}]"`
-  )
+        '@'
+    )
+    expect(JSON.stringify(res)).toMatchInlineSnapshot(
+        `"[{\\"name\\":\\"@a\\",\\"range\\":[5,18],\\"content\\":\\"@a(1,a,@b(),d)\\",\\"params\\":[\\"1\\",\\"a\\",{\\"name\\":\\"@b\\",\\"range\\":[12,15],\\"content\\":\\"@b()\\",\\"params\\":[]},\\"d\\"]},{\\"name\\":\\"@c\\",\\"range\\":[20,24],\\"content\\":\\"@c(0)\\",\\"params\\":[\\"0\\"]}]"`
+    )
 })
