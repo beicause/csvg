@@ -9,13 +9,12 @@
         "moduleResolution": "node",
         "outDir": "dist",
         "declarationDir": ".",
-        "baseUrl": ".",
-        "rootDir": "."
     },
     "include": [
         "packages/**/*.ts"
     ],
     "exclude": [
-        "*.js"
+        "*.js",
+        "packages/csvg-explorer"
     ]
 }

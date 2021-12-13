@@ -57,7 +57,8 @@ const init = () => {
     localStorage.setItem('state', state)
     const res = new Compiler().compile(src)
     output.setValue(res)
-    svg.innerHTML = res
+    svg.innerHTML=res
+
   }
 
   // handle resize

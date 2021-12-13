@@ -4,6 +4,7 @@ importers:
 
   .:
     specifiers:
+      '@rollup/plugin-node-resolve': ^13.0.6
       '@rollup/plugin-typescript': ^8.3.0
       '@types/jest': ^27.0.3
       '@typescript-eslint/eslint-plugin': ^5.5.0
@@ -22,6 +23,7 @@ importers:
       tslib: ^2.3.1
       typescript: ^4.5.2
     devDependencies:
+      '@rollup/plugin-node-resolve': 13.0.6_rollup@2.61.1
       '@rollup/plugin-typescript': 8.3.0_477267584ddb2253e74d0b949bc9446a
       '@types/jest': 27.0.3
       '@typescript-eslint/eslint-plugin': 5.6.0_16d83f5c41c3abb1061a82b07c18e4f3
@@ -670,6 +672,21 @@ packages:
       fastq: 1.13.0
     dev: true
 
+  /@rollup/plugin-node-resolve/13.0.6_rollup@2.61.1:
+    resolution: {integrity: sha1-KWKQcLt2dWe+gVf1dc+o8rjp73c=, tarball: '@rollup/plugin-node-resolve/download/@rollup/plugin-node-resolve-13.0.6.tgz'}
+    engines: {node: '>= 10.0.0'}
+    peerDependencies:
+      rollup: ^2.42.0
+    dependencies:
+      '@rollup/pluginutils': 3.1.0_rollup@2.61.1
+      '@types/resolve': 1.17.1
+      builtin-modules: 3.2.0
+      deepmerge: 4.2.2
+      is-module: 1.0.0
+      resolve: 1.20.0
+      rollup: 2.61.1
+    dev: true
+
   /@rollup/plugin-typescript/8.3.0_477267584ddb2253e74d0b949bc9446a:
     resolution: {integrity: sha1-vBB3+liXuYD8J+N2xON3iCxj5os=, tarball: '@rollup/plugin-typescript/download/@rollup/plugin-typescript-8.3.0.tgz'}
     engines: {node: '>=8.0.0'}
@@ -802,6 +819,12 @@ packages:
 
   /@types/prettier/2.4.2:
     resolution: {integrity: sha512-ekoj4qOQYp7CvjX8ZDBgN86w3MqQhLE1hczEJbEIjgFEumDy+na/4AJAbLXfgEWFNB2pKadM5rPFtuSGMWK7xA==, tarball: '@types/prettier/download/@types/prettier-2.4.2.tgz'}
+    dev: true
+
+  /@types/resolve/1.17.1:
+    resolution: {integrity: sha1-Ov1q2JZ8d+Q3bFmKgt3Vj0bsRdY=, tarball: '@types/resolve/download/@types/resolve-1.17.1.tgz'}
+    dependencies:
+      '@types/node': 16.11.12
     dev: true
 
   /@types/stack-utils/2.0.1:
@@ -1278,6 +1301,11 @@ packages:
 
   /buffer-from/1.1.2:
     resolution: {integrity: sha1-KxRqb9cugLT1XSVfNe1Zo6mkG9U=, tarball: buffer-from/download/buffer-from-1.1.2.tgz}
+    dev: true
+
+  /builtin-modules/3.2.0:
+    resolution: {integrity: sha1-RdXbmefuXmvE82LgCL+RerUEmIc=, tarball: builtin-modules/download/builtin-modules-3.2.0.tgz}
+    engines: {node: '>=6'}
     dev: true
 
   /call-bind/1.0.2:
@@ -2408,6 +2436,10 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       is-extglob: 2.1.1
+    dev: true
+
+  /is-module/1.0.0:
+    resolution: {integrity: sha1-Mlj7afeMFNW4FdZkM2tM/7ZEFZE=, tarball: is-module/download/is-module-1.0.0.tgz}
     dev: true
 
   /is-negative-zero/2.0.1:
