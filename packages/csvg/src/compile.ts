@@ -55,7 +55,11 @@ export class Compiler {
     let s = new MagicString(this.input)
     const important = parse(s.toString(), this._prefix, this._postfix)
     important.forEach(fun => {
-      const res = executeFunctionWithPostfix( fun, this._postfix, this.processors)
+      const res = executeFunctionWithPostfix(
+        fun,
+        this._postfix,
+        this.processors
+      )
       res && s.overwrite(fun.range[0], fun.range[1], res)
     })
 
@@ -70,32 +74,44 @@ export class Compiler {
   }
 }
 
-export function executeFunction(fun: FunctionExpression, processors: Map<string, Processor>): string {
+export function executeFunction(
+  fun: FunctionExpression,
+  processors: Map<string, Processor>
+): string {
   const s = [] as string[]
   s[fun.range[0]] = fun.content
   const content = new MagicString(s.join(' '))
-  fun.params.functions?.forEach((childFun) => {
+  fun.params.functions?.forEach(childFun => {
     const res = executeFunction(childFun, processors)
     content.overwrite(childFun.range[0], childFun.range[1], res)
   })
   const process = processors.get(fun.name)
-  const params = content.slice(fun.name.length + fun.range[0] + 1, fun.range[1] - 1)
-  
+  const params = content.slice(
+    fun.name.length + fun.range[0] + 1,
+    fun.range[1] - 1
+  )
   if (process) return process(params)
   return content.slice(fun.range[0], content.length())
 }
 
-export function executeFunctionWithPostfix(fun: FunctionExpression, postfix: string, processors: Map<string, Processor>): string | null {
+export function executeFunctionWithPostfix(
+  fun: FunctionExpression,
+  postfix: string,
+  processors: Map<string, Processor>
+): string | null {
   if (!fun.name.endsWith(postfix)) return null
   const s = [] as string[]
   s[fun.range[0]] = fun.content
   const content = new MagicString(s.join(' '))
-  fun.params.functions?.forEach((childFun) => {
+  fun.params.functions?.forEach(childFun => {
     const res = executeFunctionWithPostfix(childFun, postfix, processors)
     res && content.overwrite(childFun.range[0], childFun.range[1], res)
   })
   const process = processors.get(fun.name)
-  const params = content.slice(fun.name.length + fun.range[0] + 1, fun.range[1] - 1)
+  const params = content.slice(
+    fun.name.length + fun.range[0] + 1,
+    fun.range[1] - 1
+  )
   if (process) return process(params)
   return null
 }

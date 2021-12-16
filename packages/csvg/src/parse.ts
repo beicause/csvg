@@ -1,6 +1,6 @@
 export interface FunctionExpression {
   name: string
-  params: { content: string, functions?: FunctionExpression[] }
+  params: { content: string; functions?: FunctionExpression[] }
   range: [number, number]
   content: string
 }
@@ -16,7 +16,9 @@ export function parse(input: string, prefix: string, postfix: string) {
   // resolve paired parentheses
   const pairs = [] as Pair[]
   const stack = [] as Pair[]
-  const words = input.matchAll(new RegExp(`${prefix}\\w*?${postfix ? postfix + '?' : ''}\\(|\\)`, 'g'))
+  const words = input.matchAll(
+    new RegExp(`${prefix}\\w*?${postfix ? postfix + '?' : ''}\\(|\\)`, 'g')
+  )
   for (const word of words) {
     const top = stack[stack.length - 1]
     if (word[0] !== ')') {
@@ -27,8 +29,7 @@ export function parse(input: string, prefix: string, postfix: string) {
       const open = { start: word, end: [] }
       pairs.push(open)
       stack.push(open)
-    }
-    else {
+    } else {
       const open = stack.pop()
       if (open) open.end = word
     }
@@ -37,22 +38,23 @@ export function parse(input: string, prefix: string, postfix: string) {
     if (p.end.length === 0) a.splice(i, 1)
   })
   // resolve functions
-  pairs.reverse()
-  pairs.forEach(pair => {
+  for (let i = pairs.length - 1; i >= 0; i--) {
+    const pair = pairs[i]
     const name = pair.start[0].slice(0, -1)
     const range = [pair.start.index, pair.end.index! + 1] as [number, number]
     const content = pair.start.input!.substring(range[0], range[1])
-    const params = { content: input.substring(range[0] + name.length + 1, range[1]-1) } as { content: string, functions?: FunctionExpression[] }
+    const params = {
+      content: input.substring(range[0] + name.length + 1, range[1] - 1)
+    } as { content: string; functions?: FunctionExpression[] }
 
     if (pair.children) {
       for (let i = 0; i < pair.children.length; i++) {
-        const fun = functions.pop()!
+        const fun = functions.shift()!
         params.functions ||= []
-        params.functions.unshift(fun)
+        params.functions.push(fun)
       }
     }
-    functions.push({ name, content, range, params })
-  })
-  functions.reverse()
+    functions.unshift({ name, content, range, params })
+  }
   return functions
 }

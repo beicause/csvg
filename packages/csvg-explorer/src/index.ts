@@ -120,8 +120,7 @@ const init = () => {
     let res = ''
     try {
       res = new Compiler().compile(src)
-    }
-    catch (e) {
+    } catch (e) {
       console.error(e)
     }
     output.setValue(res)

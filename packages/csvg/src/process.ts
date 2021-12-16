@@ -1,8 +1,14 @@
 import { seedRandom } from './utils'
 
-export interface Processor<T = any> { (params: string): string, options?: T }
+export interface Processor<T = any> {
+  (params: string): string
+  options?: T
+}
 
-export const processRandom: Processor<{ seed: { value: number }, fractionDigits: number }> = (_params) => {
+export const processRandom: Processor<{
+  seed: { value: number }
+  fractionDigits: number
+}> = _params => {
   processRandom.options ||= {
     seed: { value: 0 },
     fractionDigits: 6
@@ -28,7 +34,7 @@ export const processRandom: Processor<{ seed: { value: number }, fractionDigits:
   return seedRandom(_options.seed, num1, num2).toFixed(_options.fractionDigits)
 }
 
-export const processRepeat: Processor = (_params) => {
+export const processRepeat: Processor = _params => {
   const params = _params.split(',')
   const p1 = params.slice(0, -1).join(',')
   let p2 = parseInt(params[params.length - 1])
@@ -38,7 +44,9 @@ export const processRepeat: Processor = (_params) => {
   return repeatText
 }
 
-export const processIndex: Processor<{ map: Map<string, number> }> = (_params) => {
+export const processIndex: Processor<{
+  map: Map<string, number>
+}> = _params => {
   if (!processIndex.options) {
     processIndex.options = { map: new Map<string, number>() }
     processIndex.options.map.set('0', -1)
@@ -53,27 +61,39 @@ export const processIndex: Processor<{ map: Map<string, number> }> = (_params) =
   return '' + _options.map.get(id)
 }
 
-export const processSet: Processor<{ storage: string[] }> = (_params) => {
+export const processSet: Processor<{ storage: string[] }> = _params => {
   processSet.options ||= { storage: [] }
   const _options = processSet.options
   _options.storage.push(_params)
   return _params
 }
 
-export const processGet: Processor<{ storage: string[] }> = (_params) => {
+export const processGet: Processor<{ storage: string[] }> = _params => {
   processGet.options ||= processSet.options
   const _options = processGet.options || { storage: [] }
   const params = _params.split(',')
   let index = parseInt(params[0] || '')
   if (isNaN(index)) index = -1
   if (index < 0) index += _options.storage.length
-  return _options.storage[index]
+  return _options.storage[index] || ''
 }
 
-export const processCalc: Processor = (_params) => {
+export const processCalc: Processor = _params => {
   const expression = _params || `''`
   const fun = new Function('obj', `with(obj){v=(${expression})};return obj.v`)
-  const res = (new Proxy({ v: '' }, { has: (_, k) => { if (k !== 'v') throw new Error(); return true } }))
-  try { fun(res) } catch { return '' }
-  return String((res.v || ''))
+  const res = new Proxy(
+    { v: '' },
+    {
+      has: (_, k) => {
+        if (k !== 'v') throw new Error()
+        return true
+      }
+    }
+  )
+  try {
+    fun(res)
+  } catch {
+    return ''
+  }
+  return String(res.v || '')
 }
