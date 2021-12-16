@@ -10,6 +10,9 @@ please visit [beicause.github.io/csvg](https://beicause.github.io/csvg).
 
 ## Get Start
 
-[try it online](https://qingcheng.asia/csvg/)  
+Now you can [Try it online](https://qingcheng.asia/csvg/)  
+or install it by npm
 
- `npm install csvg`
+```sh
+ npm install csvg
+ ```
