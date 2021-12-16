@@ -34,9 +34,69 @@ const init = () => {
     value:
       persistedState.src ||
       `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            |    @re(<circle cx="@ra(2,98)" cy="@ra(2,98)" r="1"/>
-            |    ,100)
-            |</svg>`.replace(/\n\s*?\|/g, '\n'),
+      |@re!(<circle class="bubble" id="bubble-@i()" cx="@set(@ra(100))" cy="@set(@ra(100))"
+      |    transform-origin="@calc(@get(@i(1,1)) + 10) @calc(@get(@i(1,1)) + 10)" r="1.5"></circle>
+      |    ,100)
+      |  <style>
+      |    /*reset index @i(0,0,-1) */
+      |    @re!(
+      |      #bubble-@i() {
+      |        animation-duration: 6s;
+      |        animation-delay: @calc(@set(@ra(1, 2))>1.5?@get():3+@get())s;
+      |      }, 100)
+      |      
+      |    .bubble {
+      |      fill: transparent;
+      |      animation-name: flash, zoom;
+      |      animation-timing-function: linear;
+      |      animation-iteration-count: infinite;
+      |    }
+      |
+      |    @keyframes flash {
+      |      0% {
+      |        fill: transparent;
+      |      }
+      |
+      |      8.33% {
+      |        fill: #cd1818;
+      |      }
+      |
+      |      16.66% {
+      |        fill: #fff323;
+      |      }
+      |
+      |      24.99% {
+      |        fill: #cd1818;
+      |      }
+      |
+      |      33.33% {
+      |        fill: transparent;
+      |      }
+      |
+      |      100% {
+      |        fill: transparent;
+      |     }
+      |    }
+      |    
+      |    @keyframes zoom {
+      |      0% {
+      |        transform: scale(0);
+      |      }
+      |
+      |      16.66% {
+      |        transform: scale(1.2);
+      |      }
+      |
+      |      33.33% {
+      |        transform: scale(0);
+      |      }
+      |
+      |      100% {
+      |        transform: scale(0);
+      |      }
+      |    }
+      |  </style>
+      |</svg>`.replace(/\n\s*?\|/g, '\n'),
     language: 'html',
     tabSize: 2
   })
@@ -47,6 +107,7 @@ const init = () => {
     readOnly: true,
     tabSize: 2
   })
+
   const svg = document.getElementById('svg')!
 
   const reCompile = () => {
@@ -55,10 +116,16 @@ const init = () => {
       src
     })
     localStorage.setItem('state', state)
-    const res = new Compiler().compile(src)
-    output.setValue(res)
-    svg.innerHTML=res
 
+    let res = ''
+    try {
+      res = new Compiler().compile(src)
+    }
+    catch (e) {
+      console.error(e)
+    }
+    output.setValue(res)
+    svg.innerHTML = res
   }
 
   // handle resize
@@ -71,7 +138,7 @@ const init = () => {
   watchEffect(reCompile)
 
   // update compile output when input changes
-  editor.onDidChangeModelContent(debounce(reCompile))
+  editor.onDidChangeModelContent(debounce(reCompile, 1000))
 }
 
 function debounce<T extends (...args: any[]) => any>(fn: T, delay = 300): T {

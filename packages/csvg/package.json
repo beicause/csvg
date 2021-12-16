@@ -9,7 +9,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "rimraf dist&& rollup -c"
+    "build": "cd ../../ && pnpm build-csvg"
   },
   "repository": {
     "type": "git",

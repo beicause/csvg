@@ -4,7 +4,12 @@
 
 a svg preprocessor for drawing easier
 
-## function
+## Basic Usage
+```ts
+import {Compiler} from 'csvg'
+
+```
+## Function
 
 All functions are configurable, The following is enabled by default. Replacing sequence: repeat, random, index, set, get.
 
