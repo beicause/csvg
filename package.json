@@ -6,9 +6,10 @@
     "test": "jest",
     "lint": "eslint --ext .ts packages/*/src/**.ts",
     "build-csvg": "rimraf packages/csvg/dist && rollup -c",
-    "build-explorer": "cd packages/csvg-explorer && pnpm build",
-    "dev-explorer": "cd packages/csvg-explorer && pnpm dev",
+    "build-explorer": "cd packages/explorer && pnpm build",
+    "dev-explorer": "cd packages/explorer && pnpm dev",
     "build": "run-s build-csvg build-explorer",
+    "build-docs": "cd docs && vitepress build",
     "format": "prettier --write --parser typescript \"packages/**/*.ts?(x)\""
   },
   "author": "Luo Zhihao",

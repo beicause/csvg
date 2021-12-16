@@ -2,31 +2,14 @@
 
 > Experimental  
 
-a svg preprocessor for drawing easier
+CSVG is a preprocessor with some useful functions for drawing svg and make CSS animation or [SMIL](https://developer.mozilla.org/en-US/docs/Web/SVG/SVG_animation_with_SMIL) animation easier.  
 
-## function
+## Documentation
 
-All functions are configurable, The following is enabled by default. Replacing sequence: repeat, random, index, set, get.
+please visit [beicause.github.io/csvg](https://beicause.github.io/csvg).
 
-### @random(min, max)
+## Get Start
 
-will be replaced with random number between two numbers, min and max can be omitted.  
-alias:@ra
+[try it online](https://qingcheng.asia/csvg/)  
 
-### @repeat(template, count)
-
-will be replaced with the repeated templates.  
-alias:@re
-
-### @index(step, id, reset)
-
-will be replaced with the increasing index by step. Only supports integer.    
-alias:@i
-
-### @set(value) & @get(index)
-
-the former will be replaced with the template which will be saved in an array, the latter will be replaced with the array[index], supporting negative index, -1 by default.
-
-### @calc(expression)
-
-will be replaced with the result of the expression evaluation.
+ `npm install csvg`

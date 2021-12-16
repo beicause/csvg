@@ -26,7 +26,7 @@
   "bugs": {
     "url": "https://github.com/beicause/csvg/issues"
   },
-  "homepage": "https://github.com/beicause/csvg#readme",
+  "homepage": "https://beicause.github.io/csvg/",
   "devDependencies": {
     "magic-string": "^0.25.7"
   }
