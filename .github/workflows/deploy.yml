@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Deploy
 on:
   push:
     branches:
@@ -22,12 +22,16 @@ jobs:
           cache: "pnpm"
           registry-url: https://registry.npmmirror.com/
       - name: Install and Build 🔧 
-        run: |
-          pnpm build
-          pmpm build-docs
+        run: pnpm i && pnpm build-docs && pnpm build
 
       - name: Deploy Docs🚀
         uses: JamesIves/github-pages-deploy-action@4.1.7
         with:
-          branch: master # The branch the action should deploy to.
+          branch: docs # The branch the action should deploy to.
           folder: docs/.vitepress/dist # The folder the action should deploy.
+        
+      - name: Deploy Explorer🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.7
+        with:
+          branch: explorer # The branch the action should deploy to.
+          folder: packages/explorer/dist # The folder the action should deploy.

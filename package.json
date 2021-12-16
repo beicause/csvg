@@ -9,7 +9,7 @@
     "build-explorer": "cd packages/explorer && pnpm build",
     "dev-explorer": "cd packages/explorer && pnpm dev",
     "build": "run-s build-csvg build-explorer",
-    "build-docs": "cd docs && vitepress build",
+    "build-docs": "cd docs && pnpm docs:build",
     "format": "prettier --write --parser typescript \"packages/**/*.ts?(x)\""
   },
   "author": "Luo Zhihao",
