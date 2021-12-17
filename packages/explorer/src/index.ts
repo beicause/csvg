@@ -1,7 +1,7 @@
 import * as m from 'monaco-editor'
-import { initOptions } from './options'
+import { compilerOptions, initOptions } from './options'
 import { watchEffect } from 'vue'
-import { Compiler } from 'csvg'
+import { Compiler } from 'csvg/dist/browser'
 import './index.css'
 import {
   getXmlCompletionProvider,
@@ -14,7 +14,8 @@ declare global {
   }
 }
 interface PersistedState {
-  src: string
+  src?: string
+  options?: typeof compilerOptions
 }
 
 const init = () => {
@@ -29,6 +30,8 @@ const init = () => {
   const persistedState: PersistedState = JSON.parse(
     localStorage.getItem('state') || '{}'
   )
+
+  Object.assign(compilerOptions, persistedState.options)
 
   const editor = monaco.editor.create(document.getElementById('source')!, {
     value:
@@ -91,19 +94,22 @@ const init = () => {
 
   const svg = document.getElementById('svg')!
 
-  const reCompile = () => {
+  const reCompile = async () => {
     const src = editor.getValue()
     const state = JSON.stringify({
-      src
-    })
+      src,
+      options: compilerOptions
+    } as PersistedState)
     localStorage.setItem('state', state)
 
     let res = ''
     try {
       res = new Compiler().compile(src)
+      if (compilerOptions.optimize) res = (await Compiler.optimize(res)).data
     } catch (e) {
       console.error(e)
     }
+
     output.setValue(res)
     svg.innerHTML = res
   }

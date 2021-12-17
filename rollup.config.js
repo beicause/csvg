@@ -2,13 +2,16 @@ import typescript from '@rollup/plugin-typescript'
 import nodeResolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import json from '@rollup/plugin-json'
-import { defineConfig } from 'rollup'
+import nodePolyfill from 'rollup-plugin-polyfill-node'
 import csvgPkg from './packages/csvg/package.json'
 import path from 'path'
 
-const resolveCsvg = _path => path.resolve('packages/csvg', _path)
+const resolveCsvg = (..._path) => path.resolve('packages/csvg', ..._path)
 
-export default defineConfig({
+/**
+ * @type { import('rollup').RollupOptions }
+ */
+ const baseOptions = {
   input: [resolveCsvg('src/index.ts')],
   plugins: [
     commonjs(),
@@ -20,9 +23,29 @@ export default defineConfig({
     moduleSideEffects: 'no-external',
     propertyReadSideEffects: false,
     tryCatchDeoptimization: false
-  },
+  }
+}
+/**
+ * @type { import('rollup').RollupOptions }
+ */
+const nodeOptions = {
+  ...baseOptions,
   output: [
     { format: 'cjs', file: resolveCsvg(csvgPkg.main) },
-    { format: 'esm', file: resolveCsvg(csvgPkg.module) }
+    { format: 'esm', file: resolveCsvg(csvgPkg.module) },
   ]
-})
+}
+
+/**
+ * @type { import('rollup').RollupOptions }
+ */
+const browserOptions = {
+  ...baseOptions,
+  output: [
+    { format: 'cjs', file: resolveCsvg('dist/browser/index.js') },
+    { format: 'esm', file: resolveCsvg('dist/browser/index.es.js') },
+  ]
+}
+browserOptions.plugins.splice(3,0,nodePolyfill())
+
+export default [nodeOptions, browserOptions]

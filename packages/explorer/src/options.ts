@@ -1,5 +1,8 @@
-import { h, createApp } from 'vue'
+import { h, createApp, reactive } from 'vue'
 
+export const compilerOptions = reactive({
+  optimize: false
+})
 const App = {
   setup() {
     return () => [
@@ -15,7 +18,23 @@ const App = {
 
       h('div', { id: 'options-wrapper' }, [
         h('div', { id: 'options-label' }, 'Options ↘'),
-        h('ul', { id: 'options' })
+        h('ul', { id: 'options' }, [
+          // optimize
+          h('li', [
+            h('input', {
+              type: 'checkbox',
+              id: 'optimize',
+              name: 'optimize',
+              checked: compilerOptions.optimize,
+              onChange(e: Event) {
+                compilerOptions.optimize = (
+                  e.target as HTMLInputElement
+                ).checked
+              }
+            }),
+            h('label', { for: 'optimize' }, 'optimize')
+          ])
+        ])
       ])
     ]
   }

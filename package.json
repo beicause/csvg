@@ -10,7 +10,8 @@
     "dev-explorer": "cd packages/explorer && pnpm dev",
     "build": "run-s build-csvg build-explorer",
     "build-docs": "cd docs && pnpm docs:build",
-    "format": "prettier --write --parser typescript \"packages/**/*.ts?(x)\""
+    "format": "prettier --write --parser typescript \"packages/**/*.ts?(x)\"",
+    "preview-explorer":"cd packages/explorer && vite preview --open"
   },
   "author": "Luo Zhihao",
   "license": "MIT",
@@ -44,6 +45,7 @@
     "prettier": "^2.5.1",
     "rimraf": "^3.0.2",
     "rollup": "^2.61.1",
+    "rollup-plugin-polyfill-node": "^0.8.0",
     "ts-jest": "^27.1.0",
     "ts-node": "^10.4.0",
     "tslib": "^2.3.1",

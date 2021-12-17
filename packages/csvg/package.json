@@ -4,10 +4,17 @@
   "description": "a svg preprocessor with functions",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
-  "types": "dist/index.d.ts",
+  "types": "types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
+  "exports": {
+    "./dist/browser": {
+      "require": "./dist/browser/index.js",
+      "import": "./dist/browser/index.es.js"
+    }
+  },
   "scripts": {
     "build": "cd ../../ && pnpm build-csvg"
   },

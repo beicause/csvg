@@ -64,7 +64,7 @@ export class Compiler {
   }
 
   static async optimize(input: string, config?: OptimizeOptions) {
-    const _config = { ...await loadConfig(), ...config }
+    const _config = { ...(await loadConfig()), ...config }
     const res = optimize(input, _config)
     return res
   }

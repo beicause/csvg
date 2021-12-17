@@ -21,6 +21,7 @@ importers:
       prettier: ^2.5.1
       rimraf: ^3.0.2
       rollup: ^2.61.1
+      rollup-plugin-polyfill-node: ^0.8.0
       ts-jest: ^27.1.0
       ts-node: ^10.4.0
       tslib: ^2.3.1
@@ -43,6 +44,7 @@ importers:
       prettier: 2.5.1
       rimraf: 3.0.2
       rollup: 2.61.1
+      rollup-plugin-polyfill-node: 0.8.0_rollup@2.61.1
       ts-jest: 27.1.1_d967a5c71b36617f9eaef12c091f7695
       ts-node: 10.4.0_d1ba71cee4528a43e185cc3d6fa907dc
       tslib: 2.3.1
@@ -848,6 +850,17 @@ packages:
       rollup: 2.61.1
     dev: true
 
+  /@rollup/plugin-inject/4.0.3_rollup@2.61.1:
+    resolution: {integrity: sha1-bwTrwUeQqL+JIob+m4wOsd301c4=, tarball: '@rollup/plugin-inject/download/@rollup/plugin-inject-4.0.3.tgz'}
+    peerDependencies:
+      rollup: ^1.20.0 || ^2.0.0
+    dependencies:
+      '@rollup/pluginutils': 3.1.0_rollup@2.61.1
+      estree-walker: 2.0.2
+      magic-string: 0.25.7
+      rollup: 2.61.1
+    dev: true
+
   /@rollup/plugin-json/4.1.0_rollup@2.61.1:
     resolution: {integrity: sha1-VOCYZ65pY8WThE2L16nHGClElvM=, tarball: '@rollup/plugin-json/download/@rollup/plugin-json-4.1.0.tgz'}
     peerDependencies:
@@ -1257,7 +1270,7 @@ packages:
     dev: true
 
   /acorn/7.4.1:
-    resolution: {integrity: sha1-/q7SVZc9LndVW4PbwIhRpsY1IPo=, tarball: acorn/download/acorn-7.4.1.tgz?cache=0&sync_timestamp=1637225784941&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Facorn%2Fdownload%2Facorn-7.4.1.tgz}
+    resolution: {integrity: sha1-/q7SVZc9LndVW4PbwIhRpsY1IPo=, tarball: acorn/download/acorn-7.4.1.tgz}
     engines: {node: '>=0.4.0'}
     hasBin: true
     dev: true
@@ -1680,7 +1693,7 @@ packages:
     dev: true
 
   /convert-source-map/1.8.0:
-    resolution: {integrity: sha1-8zc8MtIbTXgN2ABFFGhPt5HKQ2k=, tarball: convert-source-map/download/convert-source-map-1.8.0.tgz}
+    resolution: {integrity: sha1-8zc8MtIbTXgN2ABFFGhPt5HKQ2k=, tarball: convert-source-map/download/convert-source-map-1.8.0.tgz?cache=0&sync_timestamp=1634135144392&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fconvert-source-map%2Fdownload%2Fconvert-source-map-1.8.0.tgz}
     dependencies:
       safe-buffer: 5.1.2
     dev: true
@@ -4001,6 +4014,15 @@ packages:
       glob: 7.2.0
     dev: true
 
+  /rollup-plugin-polyfill-node/0.8.0_rollup@2.61.1:
+    resolution: {integrity: sha512-C4UeKedOmOBkB3FgR+z/v9kzRwV1Q/H8xWs1u1+CNe4XOV6hINfOrcO+TredKxYvopCmr+WKUSNsFUnD1RLHgQ==, tarball: rollup-plugin-polyfill-node/download/rollup-plugin-polyfill-node-0.8.0.tgz}
+    peerDependencies:
+      rollup: ^1.20.0 || ^2.0.0
+    dependencies:
+      '@rollup/plugin-inject': 4.0.3_rollup@2.61.1
+      rollup: 2.61.1
+    dev: true
+
   /rollup/2.61.1:
     resolution: {integrity: sha512-BbTXlEvB8d+XFbK/7E5doIcRtxWPRiqr0eb5vQ0+2paMM04Ye4PZY5nHOQef2ix24l/L0SpLd5hwcH15QHPdvA==, tarball: rollup/download/rollup-2.61.1.tgz}
     engines: {node: '>=10.0.0'}
@@ -4134,7 +4156,7 @@ packages:
     engines: {node: '>=0.10.0'}
 
   /source-map-support/0.5.21:
-    resolution: {integrity: sha512-uBHU3L3czsIyYXKX88fdrGovxdSCoTGDRZ6SYXtSRxLZUzHg5P/66Ht6uoUlHu9EZod+inXhKo3qQgwXUT/y1w==, tarball: source-map-support/download/source-map-support-0.5.21.tgz?cache=0&sync_timestamp=1637332000789&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fsource-map-support%2Fdownload%2Fsource-map-support-0.5.21.tgz}
+    resolution: {integrity: sha512-uBHU3L3czsIyYXKX88fdrGovxdSCoTGDRZ6SYXtSRxLZUzHg5P/66Ht6uoUlHu9EZod+inXhKo3qQgwXUT/y1w==, tarball: source-map-support/download/source-map-support-0.5.21.tgz?cache=0&sync_timestamp=1637369159526&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fsource-map-support%2Fdownload%2Fsource-map-support-0.5.21.tgz}
     dependencies:
       buffer-from: 1.1.2
       source-map: 0.6.1
