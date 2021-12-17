@@ -12,29 +12,25 @@ import MagicString from 'magic-string'
 import { optimize, loadConfig, OptimizeOptions } from 'svgo'
 
 export class Compiler {
-  private _prefix = '@'
-  private _postfix = '!'
+  prefix = '@'
+  postfix = '!'
   processors = new Map<string, Processor>()
 
   constructor() {
-    const add = (name: string, processor: Processor) => {
-      processor.options = undefined
-      this.use(this._prefix + name, processor)
-      this.use(this._prefix + name + this._postfix, processor)
-    }
-    add('repeat', processRepeat)
-    add('re', processRepeat)
-    add('random', processRandom)
-    add('ra', processRandom)
-    add('index', processIndex)
-    add('i', processIndex)
-    add('set', processSet)
-    add('get', processGet)
-    add('calc', processCalc)
+    this.use('repeat', processRepeat)
+    this.use('re', processRepeat)
+    this.use('random', processRandom)
+    this.use('ra', processRandom)
+    this.use('index', processIndex)
+    this.use('i', processIndex)
+    this.use('set', processSet)
+    this.use('get', processGet)
+    this.use('calc', processCalc)
   }
 
   use(name: string, processor: Processor) {
-    this.processors.set(name, processor)
+    this.processors.set(this.prefix + name, processor)
+    this.processors.set(this.prefix + name + this.postfix, processor)
     return this
   }
 
@@ -44,18 +40,18 @@ export class Compiler {
   }
   compile(input: string) {
     let s = new MagicString(input)
-    const important = parse(s.toString(), this._prefix, this._postfix)
+    const important = parse(s.toString(), this.prefix, this.postfix)
     important.forEach(fun => {
       const res = executeFunctionWithPostfix(
         fun,
-        this._postfix,
+        this.postfix,
         this.processors
       )
       res && s.overwrite(fun.range[0], fun.range[1], res)
     })
 
     s = new MagicString(s.toString())
-    const others = parse(s.toString(), this._prefix, '')
+    const others = parse(s.toString(), this.prefix, '')
     others.forEach(fun => {
       const res = executeFunction(fun, this.processors)
       s.overwrite(fun.range[0], fun.range[1], res)
