@@ -35,64 +35,45 @@ const init = () => {
       persistedState.src ||
       `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
       |@re!(<circle class="bubble" id="bubble-@i()" cx="@set(@ra(100))" cy="@set(@ra(100))"
-      |    transform-origin="@calc(@get(@i(1,1)) + 10) @calc(@get(@i(1,1)) + 10)" r="1.5"></circle>
+      |    transform-origin="@calc(@get(@i(1,1)) + 3) @calc(@get(@i(1,1)) + 3)" r="2"></circle>
       |    ,100)
       |  <style>
       |    /*reset index @i(0,0,-1) */
       |    @re!(
       |      #bubble-@i() {
-      |        animation-duration: 6s;
-      |        animation-delay: @calc(@set(@ra(1, 2))>1.5?@get():3+@get())s;
+      |        animation-delay: @calc(@set(@ra(0, 4))>3?@ra(1,2):@get()<1?2.5+@ra(1,2):@get()>2?5+@ra(1,2):7.5+@ra(1,2))s;
+      |        animation-duration: 10s;
       |      }, 100)
       |      
       |    .bubble {
       |      fill: transparent;
-      |      animation-name: flash, zoom;
+      |      animation-name:  zoom;
       |      animation-timing-function: linear;
       |      animation-iteration-count: infinite;
       |    }
       |
-      |    @keyframes flash {
-      |      0% {
+      |    @keyframes zoom {
+      |     0% {
+      |       transform: scale(0);
       |        fill: transparent;
       |      }
-      |
-      |      8.33% {
+      |      3% {
       |        fill: #cd1818;
       |      }
-      |
-      |      16.66% {
+      |      6% {
+      |        transform: scale(1.2);
       |        fill: #fff323;
       |      }
-      |
-      |      24.99% {
+      |      9% {
       |        fill: #cd1818;
       |      }
-      |
-      |      33.33% {
+      |      12% {
+      |        transform: scale(0);
       |        fill: transparent;
       |      }
-      |
       |      100% {
+      |        transform: scale(0);
       |        fill: transparent;
-      |     }
-      |    }
-      |    
-      |    @keyframes zoom {
-      |      0% {
-      |        transform: scale(0);
-      |      }
-      |
-      |      16.66% {
-      |        transform: scale(1.2);
-      |      }
-      |
-      |      33.33% {
-      |        transform: scale(0);
-      |      }
-      |
-      |      100% {
-      |        transform: scale(0);
       |      }
       |    }
       |  </style>
