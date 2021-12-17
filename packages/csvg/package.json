@@ -16,7 +16,8 @@
     }
   },
   "scripts": {
-    "build": "cd ../../ && pnpm build-csvg"
+    "build": "cd ../../ && pnpm build-csvg",
+    "changelog":"conventional-changelog -p angular -i CHANGELOG.md -s --commit-path ."
   },
   "repository": {
     "type": "git",
