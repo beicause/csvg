@@ -42,11 +42,7 @@ export class Compiler {
     let s = new MagicString(input)
     const important = parse(s.toString(), this.prefix, this.postfix)
     important.forEach(fun => {
-      const res = executeFunctionWithPostfix(
-        fun,
-        this.postfix,
-        this.processors
-      )
+      const res = executeFunctionWithPostfix(fun, this.postfix, this.processors)
       res && s.overwrite(fun.range[0], fun.range[1], res)
     })
 
