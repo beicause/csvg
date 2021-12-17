@@ -21,8 +21,8 @@ export default {
           text: 'Guide',
           children: [
             { text: 'Introduction', link: '/' },
-            { text: 'Function', link: '/guide/function' },
-            { text: 'API', link: '' }
+            { text: 'Functions', link: '/guide/function' },
+            { text: 'API', link: '/guide/api' }
           ]
         }
       ]

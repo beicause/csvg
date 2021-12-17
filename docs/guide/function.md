@@ -1,6 +1,6 @@
-# Function
+# Function in svg
 
-All functions are configurable, The following is enabled by default. Replacing sequence: repeat, random, index, set, get.
+All functions are configurable by modifying `processors` in `Compiler`. The following will be handed to corresponding processors by default when `compile` a svg string matching the prefix( '@' by default ) and names.
 
 ## @random(min, max)
 
@@ -24,3 +24,7 @@ the former will be replaced with the template which will be saved in an array, t
 ## @calc(expression)
 
 will be replaced with the result of the expression evaluation.
+
+## exclamation postfix
+
+ By default the functions within functions are executed firstly. With specific postfix( '!' by default ), functions will have a high priority and execute first, whose child functions will be treated as string template.
