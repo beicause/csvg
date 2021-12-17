@@ -3,7 +3,7 @@ import { h, createApp } from 'vue'
 const App = {
   setup() {
     return () => [
-      h('h1', 'Csvg Explorer'),
+      h('h1', 'CSVG Explorer'),
       h(
         'a',
         {

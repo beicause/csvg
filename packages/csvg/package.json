@@ -1,7 +1,7 @@
 {
   "name": "csvg",
   "version": "0.3.0",
-  "description": "a svg extension with useful macros",
+  "description": "a svg preprocessor with functions",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "types": "dist/index.d.ts",
@@ -28,6 +28,8 @@
   },
   "homepage": "https://beicause.github.io/csvg/",
   "devDependencies": {
-    "magic-string": "^0.25.7"
+    "@types/svgo": "^2.6.0",
+    "magic-string": "^0.25.7",
+    "svgo": "^2.8.0"
   }
 }

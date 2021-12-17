@@ -9,22 +9,14 @@ import {
 } from './process'
 import { FunctionExpression, parse } from './parse'
 import MagicString from 'magic-string'
+import { optimize, loadConfig, OptimizeOptions } from 'svgo'
 
 export class Compiler {
-  private _input = ''
-  private _output = ''
-  get input() {
-    return this._input
-  }
-  get output() {
-    return this._output
-  }
   private _prefix = '@'
   private _postfix = '!'
   processors = new Map<string, Processor>()
 
-  constructor(input?: string) {
-    if (input) this._input = input
+  constructor() {
     const add = (name: string, processor: Processor) => {
       processor.options = undefined
       this.use(this._prefix + name, processor)
@@ -50,9 +42,8 @@ export class Compiler {
     this.processors.delete(name)
     return this
   }
-  compile(input?: string) {
-    if (input) this._input = input
-    let s = new MagicString(this.input)
+  compile(input: string) {
+    let s = new MagicString(input)
     const important = parse(s.toString(), this._prefix, this._postfix)
     important.forEach(fun => {
       const res = executeFunctionWithPostfix(
@@ -69,8 +60,13 @@ export class Compiler {
       const res = executeFunction(fun, this.processors)
       s.overwrite(fun.range[0], fun.range[1], res)
     })
-    this._output = s.toString()
-    return this.output
+    return s.toString()
+  }
+
+  static async optimize(input: string, config?: OptimizeOptions) {
+    const _config = { ...await loadConfig(), ...config }
+    const res = optimize(input, _config)
+    return res
   }
 }
 
