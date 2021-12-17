@@ -577,64 +577,45 @@ import{c as M,h as v,w as q}from"./vendor.f544d818.js";const R=function(){const 
 
   [more...](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/Styling)`,detail:"svg styling attribute",options:null},{name:"transform",description:null,detail:null,options:null},{name:"x",description:"The x coordinate of the foreignObject.  \r\n\n *Value type*: [**<length>**](/docs/Web/SVG/Content_type#Length)|[**<percentage>**](/docs/Web/SVG/Content_type#Percentage) ; *Default value*: `0`; *Animatable*: **yes** [more...](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/foreignObject)",detail:"svg item attribute",options:null},{name:"y",description:"The y coordinate of the foreignObject.  \r\n\n *Value type*: [**<length>**](/docs/Web/SVG/Content_type#Length)|[**<percentage>**](/docs/Web/SVG/Content_type#Percentage) ; *Default value*: `0`; *Animatable*: **yes** [more...](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/foreignObject)",detail:"svg item attribute",options:null},{name:"width",description:"The width of the foreignObject.  \r\n\n *Value type*: [**<length>**](/docs/Web/SVG/Content_type#Length)|[**<percentage>**](/docs/Web/SVG/Content_type#Percentage) ; *Default value*: `auto`; *Animatable*: **yes** [more...](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/foreignObject)",detail:"svg item attribute",options:null},{name:"height",description:"The height of the foreignObject.  \r\n\n *Value type*: [**<length>**](/docs/Web/SVG/Content_type#Length)|[**<percentage>**](/docs/Web/SVG/Content_type#Percentage) ; *Default value*: `auto`; *Animatable*: **yes** [more...](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/foreignObject)",detail:"svg item attribute",options:null},{name:"content",description:null,detail:null,options:null}]}};function L(o){const e=['"',"'","<!--","<![CDATA["];let t=!0;o=o.replace(/"([^"\\]*(\\.[^"\\]*)*)"|'([^'\\]*(\\.[^'\\]*)*)'|<!--([\s\S])*?-->|<!\[CDATA\[(.*?)\]\]>/g,"");for(let n=0;n<e.length;n++){const i=o.indexOf(e[n]);i>-1&&(o=o.substring(0,i),t=!1)}return o=o.replace(/<\/*[a-zA-Z-]+$/,""),{isCompletionAvailable:t,clearedText:o}}function E(o){const e=o.match(/<\/*(?=\S*)([a-zA-Z-]+)/g);if(!e)return;const t=[];for(let n=e.length-1;n>=0;n--)if(e[n].indexOf("</")===0)t.push(e[n].substring("</".length));else{const i=o.lastIndexOf(e[n]),l=e[n].substring("<".length);if(o.indexOf("/>",i)===-1){if(!t.length||t[t.length-1]!==l)return o=o.substring(i),{tagName:l,isAttributeSearch:o.indexOf("<")>o.indexOf(">")};t.splice(t.length-1,1)}o=o.substring(0,i)}}function Z(o,e,t){if(e=e||"1",e&&e==="unbounded")return!0;let n=0;for(let i=0;i<t.length;i++)t[i]===o&&n++;return n===0||parseInt(e)>n}function ee(o,e,t){const n=[],i=z[e.tagName];if(!i||!i.attributes)return[];for(let l=0;l<i.attributes.length;l++){const a=i.attributes[l];Z(a.name,a.maxOccurs,t)&&n.push({label:a.name,insertText:`${a.name}="\${1}"`,kind:o.languages.CompletionItemKind.Property,insertTextRules:o.languages.CompletionItemInsertTextRule.InsertAsSnippet,detail:a.detail,documentation:{value:a.description||"",isTrusted:!0}})}return n}function te(o,e,t){const n=[],i=z[e.tagName];if(!i||!i.elements)return[];for(let l=0;l<i.elements.length;l++){const a=i.elements[l],r=z[a];n.push({label:a,insertText:`${a}>\${1}</${a}>`,kind:o.languages.CompletionItemKind.Class,detail:r.detail,insertTextRules:o.languages.CompletionItemInsertTextRule.InsertAsSnippet,documentation:{value:r.description||"",isTrusted:!0}})}return n}function ne(o){return{triggerCharacters:["<"],provideCompletionItems(e,t){const n=e.getValueInRange({startLineNumber:1,startColumn:1,endLineNumber:t.lineNumber,endColumn:t.column}),i=L(n);if(!i.isCompletionAvailable)return[];const l=E(i.clearedText),r=new DOMParser().parseFromString(n,"text/xml"),s=[],p=[],m=l&&l.isAttributeSearch;if(l){let u=r.lastElementChild;for(;u;){if(s.push(u.tagName),u.tagName===l.tagName){if(l.isAttributeSearch){const b=u.attributes;for(let g=0;g<b.length;g++)p.push(b[g].nodeName)}else{const b=u.children;for(let g=0;g<b.length;g++)p.push(b[g].tagName)}break}u=u.lastElementChild}}return{suggestions:l?m?ee(o,l,p):te(o,l):[]}}}}function ie(o){return{provideHover(e,t,n){const i=e.getWordAtPosition(t);if(!i)return;if(e.getLineContent(t.lineNumber).substr(i.startColumn-2,1)=="<"){const a=z[i.word];if(a)return{contents:[{value:`**${i.word}**`},{value:a.description}],range:new o.Range(t.lineNumber,i.startColumn,t.lineNumber,i.endColumn)}}else{const a=e.getValueInRange({startLineNumber:1,startColumn:1,endLineNumber:t.lineNumber,endColumn:t.column}),r=L(a);if(r.isCompletionAvailable){const s=E(r.clearedText),p=z[s.tagName];if(p&&p.attributes)for(let m=0;m<p.attributes.length;m++){const h=p.attributes[m];if(h.name===i.word)return{contents:[{value:`**${i.word}**`},{value:h.description}],range:new o.Range(t.lineNumber,i.startColumn,t.lineNumber,i.endColumn)}}}}}}}const oe=()=>{const o=window.monaco;o.editor.setTheme("vs-dark"),o.languages.registerCompletionItemProvider("html",ne(o)),o.languages.registerHoverProvider("html",ie(o));const e=JSON.parse(localStorage.getItem("state")||"{}"),t=o.editor.create(document.getElementById("source"),{value:e.src||`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
       |@re!(<circle class="bubble" id="bubble-@i()" cx="@set(@ra(100))" cy="@set(@ra(100))"
-      |    transform-origin="@calc(@get(@i(1,1)) + 10) @calc(@get(@i(1,1)) + 10)" r="1.5"></circle>
+      |    transform-origin="@calc(@get(@i(1,1)) + 3) @calc(@get(@i(1,1)) + 3)" r="2"></circle>
       |    ,100)
       |  <style>
       |    /*reset index @i(0,0,-1) */
       |    @re!(
       |      #bubble-@i() {
-      |        animation-duration: 6s;
-      |        animation-delay: @calc(@set(@ra(1, 2))>1.5?@get():3+@get())s;
+      |        animation-delay: @calc(@set(@ra(0, 4))>3?@ra(1,2):@get()<1?2.5+@ra(1,2):@get()>2?5+@ra(1,2):7.5+@ra(1,2))s;
+      |        animation-duration: 10s;
       |      }, 100)
       |      
       |    .bubble {
       |      fill: transparent;
-      |      animation-name: flash, zoom;
+      |      animation-name:  zoom;
       |      animation-timing-function: linear;
       |      animation-iteration-count: infinite;
       |    }
       |
-      |    @keyframes flash {
-      |      0% {
+      |    @keyframes zoom {
+      |     0% {
+      |       transform: scale(0);
       |        fill: transparent;
       |      }
-      |
-      |      8.33% {
+      |      3% {
       |        fill: #cd1818;
       |      }
-      |
-      |      16.66% {
+      |      6% {
+      |        transform: scale(1.2);
       |        fill: #fff323;
       |      }
-      |
-      |      24.99% {
+      |      9% {
       |        fill: #cd1818;
       |      }
-      |
-      |      33.33% {
+      |      12% {
+      |        transform: scale(0);
       |        fill: transparent;
       |      }
-      |
       |      100% {
+      |        transform: scale(0);
       |        fill: transparent;
-      |     }
-      |    }
-      |    
-      |    @keyframes zoom {
-      |      0% {
-      |        transform: scale(0);
-      |      }
-      |
-      |      16.66% {
-      |        transform: scale(1.2);
-      |      }
-      |
-      |      33.33% {
-      |        transform: scale(0);
-      |      }
-      |
-      |      100% {
-      |        transform: scale(0);
       |      }
       |    }
       |  </style>
