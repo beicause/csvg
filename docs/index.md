@@ -4,6 +4,9 @@ Scalable Vector Graphics, [SVG](https://developer.mozilla.org/en-US/docs/Web/SVG
 
 ## Get Start
 
-try it [online](https://qingcheng.asia/csvg)  
+You can [Try it online](https://csvg-explorer.netlify.app)  
+Or install it
 
- `npm install csvg`
+```sh
+ npm install csvg
+ ```
