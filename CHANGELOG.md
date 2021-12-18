@@ -1,3 +1,17 @@
+# [0.0.0](https://github.com/beicause/csvg/compare/v0.3.1...v0.0.0) (2021-12-18)
+
+
+### Bug Fixes
+
+* clear options in compiler constructor ([9099eb7](https://github.com/beicause/csvg/commit/9099eb7404370a88a78d3292021ce1da9792d99c))
+
+
+### Features
+
+* expose postfix and prefix in Compiler ([51e3784](https://github.com/beicause/csvg/commit/51e3784d1375bd4e97d9e94f8f60d393618d9f58))
+
+
+
 ## [0.3.1](https://github.com/beicause/csvg/compare/v0.3.0...v0.3.1) (2021-12-17)
 
 

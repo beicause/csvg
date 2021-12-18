@@ -3,3 +3,4 @@ LICENSE.md
 .prettierignore
 pnpm-lock.yaml
 pnpm-workspace.yaml
+.vscode-test

@@ -11,7 +11,7 @@ const resolveCsvg = (..._path) => path.resolve('packages/csvg', ..._path)
 /**
  * @type { import('rollup').RollupOptions }
  */
- const baseOptions = {
+const baseOptions = {
   input: [resolveCsvg('src/index.ts')],
   plugins: [
     commonjs(),
@@ -42,10 +42,10 @@ const nodeOptions = {
 const browserOptions = {
   ...baseOptions,
   output: [
-    { format: 'cjs', file: resolveCsvg('dist/browser/index.js') },
-    { format: 'esm', file: resolveCsvg('dist/browser/index.es.js') },
+    { format: 'cjs', file: resolveCsvg(csvgPkg.exports['./dist/browser'].require) },
+    { format: 'esm', file: resolveCsvg(csvgPkg.exports['./dist/browser'].import) },
   ]
 }
-browserOptions.plugins.splice(3,0,nodePolyfill())
+browserOptions.plugins.splice(3, 0, nodePolyfill())
 
 export default [nodeOptions, browserOptions]

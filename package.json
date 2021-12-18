@@ -7,11 +7,14 @@
     "lint": "eslint --ext .ts packages/*/src/**.ts",
     "build-csvg": "rimraf packages/csvg/dist && rollup -c",
     "build-explorer": "cd packages/explorer && pnpm build",
-    "dev-explorer": "cd packages/explorer && pnpm dev",
-    "build": "run-s build-csvg build-explorer",
     "build-docs": "cd docs && pnpm docs:build",
-    "format": "prettier --write --parser typescript \"packages/**/*.ts?(x)\"",
-    "preview-explorer": "cd packages/explorer && vite preview --open"
+    "build-vscode": "cd packages/vscode-csvg && pnpm compile",
+    "build": "run-s build-csvg build-explorer build-vscode",
+    "dev-explorer": "cd packages/explorer && pnpm dev",
+    "preview-explorer": "cd packages/explorer && vite preview --open",
+    "watch-vscode": "cd packages/vscode-csvg && pnpm watch",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --commit-path .",
+    "format": "prettier --write --parser typescript \"packages/**/*.ts?(x)\""
   },
   "author": "Luo Zhihao",
   "license": "MIT",

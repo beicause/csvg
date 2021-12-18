@@ -22,7 +22,11 @@ module.exports = defineConfig({
     'semi':['error','never'],
     'jest/no-commented-out-tests':'off'
   },
-
+  ignorePatterns:[
+    "packages/vscode-csvg/out",
+    "dist",
+    "**/*.d.ts"
+  ],
   overrides: [
     {
       files: [

@@ -1,31 +1,35 @@
 {
   "name": "csvg",
   "version": "0.3.1",
-  "description": "a svg preprocessor with functions",
+  "description": "a string preprocessor with functions",
   "main": "dist/index.js",
-  "module": "dist/index.es.js",
-  "types": "types/index.d.ts",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "files": [
     "dist",
     "src"
   ],
   "exports": {
+    ".":{
+      "require":"./dist/index.js",
+      "import":"./dist/index.mjs"
+    },
     "./dist/browser": {
       "require": "./dist/browser/index.js",
-      "import": "./dist/browser/index.es.js"
+      "import": "./dist/browser/index.mjs"
     }
   },
   "scripts": {
-    "build": "cd ../../ && pnpm build-csvg",
-    "changelog":"conventional-changelog -p angular -i CHANGELOG.md -s --commit-path ."
+    "build": "cd ../../ && pnpm build-csvg"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/beicause/csvg.git"
   },
   "keywords": [
-    "svg",
     "csvg",
+    "svg",
+    "string",
     "effect",
     "animation"
   ],

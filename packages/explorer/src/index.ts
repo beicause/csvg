@@ -107,7 +107,7 @@ const init = () => {
       if (compilerOptions.optimize) res = (await Compiler.optimizeSVG(res)).data
       return res
     }
-    compile().then((res) => {
+    compile().then(res => {
       output.setValue(res)
       svg.innerHTML = res
     })

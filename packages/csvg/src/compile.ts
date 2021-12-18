@@ -26,7 +26,7 @@ export class Compiler {
     this.use('set', processSet)
     this.use('get', processGet)
     this.use('calc', processCalc)
-    this.processors.forEach((v) => v.options = undefined)
+    this.processors.forEach(v => (v.options = undefined))
   }
 
   use(name: string, processor: Processor) {
