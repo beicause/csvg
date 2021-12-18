@@ -1,6 +1,6 @@
 {
   "name": "csvg-monorepo",
-  "version": "0.0.0",
+  "version": "0.3.1",
   "private": true,
   "scripts": {
     "test": "jest",
@@ -14,13 +14,11 @@
     "preview-explorer": "cd packages/explorer && vite preview --open",
     "watch-vscode": "cd packages/vscode-csvg && pnpm watch",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --commit-path .",
-    "format": "prettier --write --parser typescript \"packages/**/*.ts?(x)\""
+    "format": "prettier --write --parser typescript \"packages/**/*.ts?(x)\"",
+    "prepare": "husky install"
   },
   "author": "Luo Zhihao",
   "license": "MIT",
-  "gitHooks": {
-    "pre-commit": "lint-staged"
-  },
   "lint-staged": {
     "*.js": [
       "prettier --write"
@@ -43,6 +41,7 @@
     "eslint": "^8.4.0",
     "eslint-define-config": "^1.2.0",
     "eslint-plugin-jest": "^25.3.0",
+    "husky": "^7.0.4",
     "jest": "^27.4.3",
     "lint-staged": "^12.1.2",
     "npm-run-all": "^4.1.5",
