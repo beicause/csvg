@@ -29,5 +29,5 @@ import { Compiler } from 'csvg'
 // use Compiler's processors
 const output = new Compiler().compile(svg)
 // use svgo optimizer
-const optimized = Compiler.optimize(output,config)
+const optimized = await Compiler.optimize(output,config)
  ```

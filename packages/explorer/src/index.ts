@@ -47,7 +47,7 @@ const init = () => {
       |        animation-delay: @calc(@set(@ra(0, 4))>3?@ra(1,2):@get()<1?2.5+@ra(1,2):@get()>2?5+@ra(1,2):7.5+@ra(1,2))s;
       |        animation-duration: 10s;
       |      }, 100)
-      |      
+      |
       |    .bubble {
       |      fill: transparent;
       |      animation-name:  zoom;
@@ -94,7 +94,7 @@ const init = () => {
 
   const svg = document.getElementById('svg')!
 
-  const reCompile = async () => {
+  const reCompile = () => {
     const src = editor.getValue()
     const state = JSON.stringify({
       src,
@@ -102,16 +102,15 @@ const init = () => {
     } as PersistedState)
     localStorage.setItem('state', state)
 
-    let res = ''
-    try {
-      res = new Compiler().compile(src)
+    const compile = async () => {
+      let res = new Compiler().compile(src)
       if (compilerOptions.optimize) res = (await Compiler.optimize(res)).data
-    } catch (e) {
-      console.error(e)
+      return res
     }
-
-    output.setValue(res)
-    svg.innerHTML = res
+    compile().then((res) => {
+      output.setValue(res)
+      svg.innerHTML = res
+    })
   }
 
   // handle resize
