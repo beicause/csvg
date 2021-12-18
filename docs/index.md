@@ -1,6 +1,6 @@
 # What is csvg?
 
-Scalable Vector Graphics, [SVG](https://developer.mozilla.org/en-US/docs/Web/SVG) is excellent way to draw beautiful images on web. Generally, we use SVG editors to make SVG images. However, most SVG editors do not yet support animation, and they are not flexible for developers. CSVG is a preprocessor with some useful functions for drawing and make CSS animation or [SMIL](https://developer.mozilla.org/en-US/docs/Web/SVG/SVG_animation_with_SMIL) animation in SVG easier.  
+Scalable Vector Graphics, [SVG](https://developer.mozilla.org/en-US/docs/Web/SVG) is excellent way to draw beautiful images on web. Generally, we use SVG editors to make SVG images. However, most SVG editors do not yet support animation, and they are not flexible for developers. CSVG is a preprocessor with some useful functions for drawing and make CSS animation or [SMIL](https://developer.mozilla.org/en-US/docs/Web/SVG/SVG_animation_with_SMIL) animation in SVG easier.(Actually it's not limited to this, any string is ok)   
 
 ## Get Start
 

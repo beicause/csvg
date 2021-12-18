@@ -1,17 +1,3 @@
-# [0.0.0](https://github.com/beicause/csvg/compare/v0.3.1...v0.0.0) (2021-12-18)
-
-
-### Bug Fixes
-
-* clear options in compiler constructor ([9099eb7](https://github.com/beicause/csvg/commit/9099eb7404370a88a78d3292021ce1da9792d99c))
-
-
-### Features
-
-* expose postfix and prefix in Compiler ([51e3784](https://github.com/beicause/csvg/commit/51e3784d1375bd4e97d9e94f8f60d393618d9f58))
-
-
-
 ## [0.3.1](https://github.com/beicause/csvg/compare/v0.3.0...v0.3.1) (2021-12-17)
 
 
@@ -54,6 +40,22 @@
 
 
 ## [0.2.1](https://github.com/beicause/csvg/compare/v0.2.0...v0.2.1) (2021-12-12)
+
+
+
+# [0.2.0](https://github.com/beicause/csvg/compare/bfd96ddf7283446f049d3cfd16b689edb71d8c1f...v0.2.0) (2021-12-12)
+
+
+### Bug Fixes
+
+* join the [@repeat](https://github.com/repeat) params except the last ([1445615](https://github.com/beicause/csvg/commit/1445615195061cecb70de581002c4d753212c253))
+
+
+### Features
+
+* add [@get](https://github.com/get) & [@set](https://github.com/set) ([307e260](https://github.com/beicause/csvg/commit/307e260da8f1dcaedfbf9fda8e2ef1232cc2f7f5))
+* add [@index](https://github.com/index) macro ([bfd96dd](https://github.com/beicause/csvg/commit/bfd96ddf7283446f049d3cfd16b689edb71d8c1f))
+* add svg language support ([146a8a2](https://github.com/beicause/csvg/commit/146a8a206715d01e4ef01bc9d768466fbfec40a6))
 
 
 

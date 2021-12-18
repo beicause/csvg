@@ -6,7 +6,7 @@
 
 > Experimental  
 
-CSVG is a preprocessor with some useful functions for drawing and make CSS animation or [SMIL](https://developer.mozilla.org/en-US/docs/Web/SVG/SVG_animation_with_SMIL) animation in SVG easier.  
+CSVG is a preprocessor with some useful functions for drawing and make CSS animation or [SMIL](https://developer.mozilla.org/en-US/docs/Web/SVG/SVG_animation_with_SMIL) animation in SVG easier.(Actually it's not limited to this, any string is ok)  
 
 ## Documentation
 
