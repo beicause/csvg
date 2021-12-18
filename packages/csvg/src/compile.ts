@@ -56,7 +56,7 @@ export class Compiler {
     return s.toString()
   }
 
-  static async optimize(input: string, config?: OptimizeOptions) {
+  static async optimizeSVG(input: string, config?: OptimizeOptions) {
     const _config = { ...(await loadConfig()), ...config }
     const res = optimize(input, _config)
     return res

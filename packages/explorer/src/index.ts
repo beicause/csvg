@@ -104,7 +104,7 @@ const init = () => {
 
     const compile = async () => {
       let res = new Compiler().compile(src)
-      if (compilerOptions.optimize) res = (await Compiler.optimize(res)).data
+      if (compilerOptions.optimize) res = (await Compiler.optimizeSVG(res)).data
       return res
     }
     compile().then((res) => {
