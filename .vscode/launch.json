@@ -10,10 +10,10 @@
 			"type": "extensionHost",
 			"request": "launch",
 			"args": [
-				"--extensionDevelopmentPath=${workspaceFolder}/packages/vscode-csvg"
+				"--extensionDevelopmentPath=${workspaceFolder}/packages/vscode"
 			],
 			"outFiles": [
-				"${workspaceFolder}/packages/vscode-csvg/dist/**/*.js"
+				"${workspaceFolder}/packages/vscode/dist/**/*.js"
 			],
 			"preLaunchTask": "${defaultBuildTask}"
 		},
@@ -22,11 +22,11 @@
 			"type": "extensionHost",
 			"request": "launch",
 			"args": [
-				"--extensionDevelopmentPath=${workspaceFolder}/packages/vscode-csvg",
-				"--extensionTestsPath=${workspaceFolder}/packages/vscode-csvg/dist/test/suite/index"
+				"--extensionDevelopmentPath=${workspaceFolder}/packages/vscode",
+				"--extensionTestsPath=${workspaceFolder}/packages/vscode/dist/test/suite/index"
 			],
 			"outFiles": [
-				"${workspaceFolder}/packages/vscode-csvg/dist/test/**/*.js"
+				"${workspaceFolder}/packages/vscode/dist/test/**/*.js"
 			],
 			"preLaunchTask": "${defaultBuildTask}"
 		}

@@ -2,17 +2,21 @@
   "name": "csvg-monorepo",
   "version": "0.3.1",
   "private": true,
+  "workspaces": [
+    "packages/*",
+    "docs"
+  ],
   "scripts": {
     "test": "jest",
     "lint": "eslint --ext .ts packages/*/src/**.ts",
     "build-csvg": "rimraf packages/csvg/dist && rollup -c",
     "build-explorer": "cd packages/explorer && pnpm build",
     "build-docs": "cd docs && pnpm docs:build",
-    "build-vscode": "cd packages/vscode-csvg && pnpm compile",
+    "build-vscode": "cd packages/vscode && pnpm compile",
     "build": "run-s build-csvg build-explorer build-vscode",
     "dev-explorer": "cd packages/explorer && pnpm dev",
     "preview-explorer": "cd packages/explorer && vite preview --open",
-    "watch-vscode": "cd packages/vscode-csvg && pnpm watch",
+    "watch-vscode": "cd packages/vscode && pnpm watch",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --commit-path .",
     "format": "prettier --write --parser typescript \"packages/**/*.ts?(x)\"",
     "prepare": "husky install"
@@ -53,5 +57,6 @@
     "ts-node": "^10.4.0",
     "tslib": "^2.3.1",
     "typescript": "^4.5.2"
-  }
+  },
+  "packageManager": "pnpm"
 }

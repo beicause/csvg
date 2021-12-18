@@ -43,7 +43,7 @@
 		"compile": "tsc -p ./",
 		"watch": "tsc -watch -p ./",
 		"pretest": "pnpm run compile && pnpm run lint",
-		"changelog":"conventional-changelog -p angular -i CHANGELOG.md -s --commit-path . --lerna-package vscode-csvg"
+		"changelog":"conventional-changelog -p angular -i CHANGELOG.md -s --commit-path . --lerna-package vscode"
 	},
 	"devDependencies": {
 		"@types/vscode": "^1.63.0",

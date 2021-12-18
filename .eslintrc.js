@@ -8,8 +8,8 @@ module.exports = defineConfig({
     node: true
   },
   extends: [
-    "eslint:recommended",
-    "plugin:jest/recommended",
+    'eslint:recommended',
+    'plugin:jest/recommended',
     'plugin:@typescript-eslint/recommended'
   ],
   parser: '@typescript-eslint/parser',
@@ -19,19 +19,13 @@ module.exports = defineConfig({
   },
 
   rules: {
-    'semi':['error','never'],
-    'jest/no-commented-out-tests':'off'
+    semi: ['error', 'never'],
+    'jest/no-commented-out-tests': 'off'
   },
-  ignorePatterns:[
-    "packages/vscode-csvg/out",
-    "dist",
-    "**/*.d.ts"
-  ],
+  ignorePatterns: ['packages/vscode/dist', 'dist', '**/*.d.ts'],
   overrides: [
     {
-      files: [
-        '**/tests/*.spec.{j,t}s?(x)'
-      ],
+      files: ['**/tests/*.spec.{j,t}s?(x)'],
       env: {
         jest: true
       }
