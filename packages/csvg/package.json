@@ -2,17 +2,21 @@
   "name": "csvg",
   "version": "0.3.1",
   "description": "a string preprocessor with functions",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
+  "main": "dist/node/index.js",
+  "module": "dist/node/index.mjs",
+  "types": "types/index.d.ts",
   "files": [
     "dist",
-    "src"
+    "types"
   ],
   "exports": {
-    ".":{
-      "require":"./dist/index.js",
-      "import":"./dist/index.mjs"
+    ".": {
+      "require": "./dist/node/index.js",
+      "import": "./dist/node/index.mjs"
+    },
+    "./dist/node": {
+      "require": "./dist/node/index.js",
+      "import": "./dist/node/index.mjs"
     },
     "./dist/browser": {
       "require": "./dist/browser/index.js",
@@ -20,7 +24,8 @@
     }
   },
   "scripts": {
-    "build": "cd ../../ && pnpm build-csvg"
+    "build": "rimraf dist &&  pnpm build-types && cd ../../ && rollup -c",
+    "build-types": "rimraf types && tsc --emitDeclarationOnly"
   },
   "repository": {
     "type": "git",

@@ -2,18 +2,16 @@
     "compilerOptions": {
         "target": "es2019",
         "module": "ESNext",
-        "declaration": true,
         "strict": true,
         "esModuleInterop": true,
         "strictNullChecks": true,
         "moduleResolution": "node",
-        "outDir": "dist",
-        "declarationDir": ".",
     },
     "include": [
-        "packages/csvg/**/*.ts"
+        "packages/csvg/src"
     ],
     "exclude": [
-        "*.js"
+        "node_modules",
+        "**/tests/**"
     ]
 }

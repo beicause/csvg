@@ -1,4 +1,4 @@
-import typescript from '@rollup/plugin-typescript'
+import typescript from 'rollup-plugin-typescript2'
 import nodeResolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import json from '@rollup/plugin-json'
@@ -8,31 +8,52 @@ import path from 'path'
 
 const resolveCsvg = (..._path) => path.resolve('packages/csvg', ..._path)
 
-/**
- * @type { import('rollup').RollupOptions }
- */
-const baseOptions = {
-  input: [resolveCsvg('src/index.ts')],
-  plugins: [
-    commonjs(),
-    json(),
-    typescript({ tsconfig: './tsconfig.json' }),
-    nodeResolve({ preferBuiltins: true })
-  ],
-  treeshake: {
-    moduleSideEffects: 'no-external',
-    propertyReadSideEffects: false,
-    tryCatchDeoptimization: false
+const generateDts = () => {
+  /**
+   * @type { import('rollup').Plugin }
+   */
+  const plugin = {
+    name: 'dts',
+    generateBundle() {
+      this.emitFile({
+        type: 'asset',
+        fileName: 'index.d.ts',
+        source: `export * from '../../types'`
+      })
+    }
   }
+  return plugin
+}
+
+const baseOptions = () => {
+  /**
+   * @type { import('rollup').RollupOptions }
+   */
+  const options = {
+    input: [resolveCsvg('src/index.ts')],
+    plugins: [
+      commonjs(),
+      json(),
+      typescript(),
+      nodeResolve({ preferBuiltins: true }),
+      generateDts()
+    ],
+    treeshake: {
+      moduleSideEffects: 'no-external',
+      propertyReadSideEffects: false,
+      tryCatchDeoptimization: false
+    }
+  }
+  return options
 }
 /**
  * @type { import('rollup').RollupOptions }
  */
 const nodeOptions = {
-  ...baseOptions,
+  ...baseOptions(),
   output: [
     { format: 'cjs', file: resolveCsvg(csvgPkg.main) },
-    { format: 'esm', file: resolveCsvg(csvgPkg.module) },
+    { format: 'esm', file: resolveCsvg(csvgPkg.module) }
   ]
 }
 
@@ -40,10 +61,16 @@ const nodeOptions = {
  * @type { import('rollup').RollupOptions }
  */
 const browserOptions = {
-  ...baseOptions,
+  ...baseOptions(),
   output: [
-    { format: 'cjs', file: resolveCsvg(csvgPkg.exports['./dist/browser'].require) },
-    { format: 'esm', file: resolveCsvg(csvgPkg.exports['./dist/browser'].import) },
+    {
+      format: 'cjs',
+      file: resolveCsvg(csvgPkg.exports['./dist/browser'].require)
+    },
+    {
+      format: 'esm',
+      file: resolveCsvg(csvgPkg.exports['./dist/browser'].import)
+    }
   ]
 }
 browserOptions.plugins.splice(3, 0, nodePolyfill())
