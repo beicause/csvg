@@ -1,1 +1,0 @@
-import{_ as a,c as s,o as e,a as n}from"./app.7f688f53.js";const h='{"title":"What is csvg?","description":"","frontmatter":{},"headers":[{"level":2,"title":"Get Start","slug":"get-start"}],"relativePath":"index.md","lastUpdated":1639848840096}',t={},o=n("",7),p=[o];function r(i,c,l,d,u,k){return e(),s("div",null,p)}var _=a(t,[["render",r]]);export{h as __pageData,_ as default};
